@@ -1,0 +1,21 @@
+body,
+html {
+  min-height: 100%;
+  height: 100%;
+}
+
+html {
+  overflow: hidden;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+iframe,
+body,
+html {
+  background: transparent;
+}

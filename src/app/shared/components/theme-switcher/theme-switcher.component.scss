@@ -1,0 +1,22 @@
+button[mat-icon-button] {
+  $large-size-button: 60px;
+  $large-size-icon: 36px;
+
+  &.pallet {
+    width: $large-size-button;
+    height: $large-size-button;
+    line-height: $large-size-button;
+    .mat-icon {
+      font-size: $large-size-icon;
+      width: $large-size-icon;
+      height: $large-size-icon;
+      line-height: $large-size-icon;
+    }
+    .mat-button-ripple {
+      font-size: inherit;
+      width: inherit;
+      height: inherit;
+      line-height: inherit;
+    }
+  }
+}

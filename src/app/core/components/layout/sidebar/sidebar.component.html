@@ -1,0 +1,20 @@
+<ng-container *ngIf="{ isOpen: sidebarService.isOpen | async } as context">
+  <mat-sidenav-container class="sidenav-container" autosize="false" hasBackdrop="false">
+    <mat-sidenav class="sidebar" [class.sidebar-close]="!context.isOpen" opened="true" mode="side">
+      <div class="sidebar-header">
+        <ng-template curSidenavContentArea></ng-template>
+      </div>
+      <div class="sidebar-footer">
+        <div aria-hidden="true" class="icon" (click)="toggle(!context.isOpen)">
+          <mat-icon
+            [class.mat-icon-fliped]="context.isOpen"
+            color="primary"
+            [fontIcon]="'double_arrow'"></mat-icon>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
