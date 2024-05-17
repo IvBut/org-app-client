@@ -1,1 +1,35 @@
-<p>today-page works!</p>
+<mat-form-field color="accent" appearance="outline">
+  <mat-label>Показать курс(ы)</mat-label>
+  <mat-select multiple [value]="selectedOptions" (valueChange)="handleSelect($event)">
+    <mat-option *ngFor="let opt of options" [disabled]="!!opt?.disabled" [value]="opt.value">{{ opt.label }}</mat-option>
+  </mat-select>
+</mat-form-field>
+<table mat-table [dataSource]="dataToDisplay">
+  <ng-container matColumnDef="currency">
+    <th mat-header-cell *matHeaderCellDef>Валюта</th>
+    <td mat-cell *matCellDef="let rowData">
+      <div class="currency-cell">
+        <h3>{{ rowData?.Cur_Scale + ' ' + rowData?.symbol }}</h3>
+        <span>
+          <em>{{ rowData?.Cur_Name }}</em>
+        </span>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="byn">
+    <th mat-header-cell *matHeaderCellDef>Белорусские рубли</th>
+    <td mat-cell *matCellDef="let rowData">
+      <h3>{{ rowData?.Cur_OfficialRate }}</h3>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator
+  *ngIf="total > pageSize"
+  color="primary"
+  [length]="total"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="handleOnPage($event)"></mat-paginator>

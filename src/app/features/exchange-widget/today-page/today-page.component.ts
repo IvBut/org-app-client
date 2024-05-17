@@ -1,4 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit
+} from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Currency } from '../../../core/constants/currency';
+import { IExchangeModel } from '../model/exchange.model';
+import { ExchangeService } from '../services/exchange.service';
+
+const DEFAULT_OPTIONS = [
+  { label: 'Доллары', value: Currency.USD },
+  { label: 'Евро', value: Currency.EUR }
+];
 
 @Component({
   selector: 'cur-today-page',
@@ -6,4 +21,72 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './today-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodayPageComponent {}
+export class TodayPageComponent implements OnInit {
+  cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  exChangeService: ExchangeService = inject(ExchangeService);
+  data: IExchangeModel[] = [];
+  dataToDisplay: IExchangeModel[] = [];
+  filteredData: IExchangeModel[] = [];
+  displayedColumns = ['currency', 'byn'];
+  pageSize = 5;
+  pageIndex = 0;
+  total = 0;
+  pageSizeOptions = [5, 10, 15];
+  selectedOptions: string[] = [...DEFAULT_OPTIONS.map(el => el.value)];
+  options: { label: string; value: string; disabled?: boolean }[] = [
+    { label: 'Выбрать всё', value: 'ALL' },
+    ...DEFAULT_OPTIONS,
+    { label: 'Рубли', value: Currency.RUB },
+    { label: 'Злотые', value: Currency.PLN }
+  ];
+
+  private setDataToDisplay(list: IExchangeModel[]) {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.dataToDisplay = list.slice(start, end > list.length ? list.length : end);
+    this.cdr.markForCheck();
+  }
+
+  private setFilteredData(filter: string[]) {
+    const isAllSelected = filter.includes('ALL');
+    this.pageIndex = 0;
+    const newOptions = this.options.map(el => ({
+      ...el,
+      disabled: isAllSelected && el.value !== 'ALL'
+    }));
+    this.options = newOptions;
+    if (isAllSelected) {
+      this.selectedOptions = newOptions.map(el => el.value);
+    }
+    this.filteredData = isAllSelected
+      ? this.data
+      : this.data.filter(el => filter.find(code => el.Cur_Abbreviation === code));
+    this.total = this.filteredData.length;
+    this.setDataToDisplay(this.filteredData);
+  }
+
+  handleOnPage({ pageSize, pageIndex }: PageEvent) {
+    if (this.pageSize !== pageSize) {
+      this.pageSize = pageSize;
+      this.pageIndex = 0;
+    } else {
+      this.pageIndex = pageIndex;
+    }
+    this.setDataToDisplay(this.filteredData);
+  }
+
+  handleSelect(list: string[]) {
+    this.setFilteredData(list);
+  }
+  ngOnInit() {
+    this.exChangeService.getRate({ periodicity: '0' }).subscribe(
+      data => {
+        this.data = data;
+        this.setFilteredData(this.selectedOptions);
+      },
+      error => {
+        console.log('>>>> Error', error);
+      }
+    );
+  }
+}
