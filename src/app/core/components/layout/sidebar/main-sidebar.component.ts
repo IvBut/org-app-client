@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { EIconName } from '../../../../shared/models/icon.model';
 import { ISidenavLinkModel } from '../../../../shared/models/sidenav-link.model';
 
 @Component({
@@ -10,17 +11,17 @@ import { ISidenavLinkModel } from '../../../../shared/models/sidenav-link.model'
 export class MainSidebarComponent {
   protected readonly CONFIG: ISidenavLinkModel[] = [
     {
-      icon: 'home',
+      icon: EIconName.HOME,
       routerLink: '/home',
       text: 'На главную'
     },
     {
-      icon: 'currency_exchange',
+      icon: EIconName.CURRENCY_EXCHANGE,
       routerLink: '/exchange',
       text: 'Курс валют'
     },
     {
-      icon: 'settings',
+      icon: EIconName.SETTINGS,
       routerLink: '/settings',
       text: 'Настройки'
     }

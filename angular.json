@@ -64,6 +64,12 @@
               },
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+               "src",
+               "src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {

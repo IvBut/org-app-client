@@ -1,0 +1,83 @@
+export enum EIconName {
+  ERROR = 'error',
+  INFO = 'info',
+  DOUBLE_ARROW = 'double_arrow',
+  ARROW_BACK = 'arrow_back',
+  HOME = 'home',
+  CURRENCY_EXCHANGE = 'currency_exchange',
+  SETTINGS = 'settings',
+  TODAY = 'today',
+  HISTORY = 'history',
+  PALETTE = 'palette',
+  FILTER_ALT_OFF = 'filter_alt_off',
+  REFRESH = 'refresh'
+}
+
+export enum EIconSize {
+  XXSmall = 'XXSmall',
+  XSmall = 'XSmall',
+  Small = 'Small',
+  Medium = 'Medium',
+  Large = 'Large',
+  XLarge = 'XLarge',
+  XXLarge = 'XXLarge',
+  XXXLarge = 'XXXLarge'
+}
+
+interface IIconConfig {
+  name: EIconName;
+  fileName: string;
+}
+
+const getPath = (fileName: string) => `/assets/icons/${fileName}.svg`;
+
+export const iconConfig: IIconConfig[] = [
+  {
+    fileName: getPath('error'),
+    name: EIconName.ERROR
+  },
+  {
+    fileName: getPath('info'),
+    name: EIconName.INFO
+  },
+  {
+    fileName: getPath('double_arrow'),
+    name: EIconName.DOUBLE_ARROW
+  },
+  {
+    fileName: getPath('arrow_back'),
+    name: EIconName.ARROW_BACK
+  },
+  {
+    fileName: getPath('home'),
+    name: EIconName.HOME
+  },
+  {
+    fileName: getPath('currency_exchange'),
+    name: EIconName.CURRENCY_EXCHANGE
+  },
+  {
+    fileName: getPath('settings'),
+    name: EIconName.SETTINGS
+  },
+  {
+    fileName: getPath('today'),
+    name: EIconName.TODAY
+  },
+  {
+    fileName: getPath('history'),
+    name: EIconName.HISTORY
+  },
+  {
+    fileName: getPath('palette'),
+    name: EIconName.PALETTE
+  },
+  {
+    fileName: getPath('filter_alt_off'),
+    name: EIconName.FILTER_ALT_OFF
+  },
+  {
+    fileName: getPath('refresh'),
+    name: EIconName.REFRESH
+  }
+];

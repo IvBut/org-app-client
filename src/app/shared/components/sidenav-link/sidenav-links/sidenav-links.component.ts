@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 
 import { SidebarService } from '../../../../core/components/layout/services/sidebarService';
+import { EIconName } from '../../../models/icon.model';
 import { ISidenavLinkModel } from '../../../models/sidenav-link.model';
 
 @Component({
@@ -11,6 +12,7 @@ import { ISidenavLinkModel } from '../../../models/sidenav-link.model';
 })
 export class SidenavLinksComponent {
   sidebarService = inject(SidebarService);
+  protected readonly EIconName = EIconName;
 
   @Input()
   links: ISidenavLinkModel[] = [];

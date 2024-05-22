@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { EIconName } from '../../../../shared/models/icon.model';
 import { ISidenavLinkModel } from '../../../../shared/models/sidenav-link.model';
 
 @Component({
@@ -15,18 +16,14 @@ export class ExchangeSidebarComponent {
       isBack: true
     },
     {
-      icon: 'today',
+      icon: EIconName.TODAY,
       routerLink: '/exchange/today',
       text: 'Сегодня'
     },
     {
-      icon: 'timeline',
+      icon: EIconName.HISTORY,
       routerLink: '/exchange/history',
       text: 'История'
-    },
-    {
-      routerLink: '/exchange/history1',
-      text: 'История1'
     }
   ];
 }

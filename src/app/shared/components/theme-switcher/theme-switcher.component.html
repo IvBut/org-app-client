@@ -1,12 +1,12 @@
-<button mat-icon-button disableRipple="true" class="pallet" [matMenuTriggerFor]="menu">
-  <mat-icon class="pallet-icon" fontIcon="palette"></mat-icon>
+<button mat-fab color="primary" disableRipple="true" [matMenuTriggerFor]="menu">
+  <mat-icon class="pallet" [svgIcon]="EIconName.PALETTE" [curIconSize]="paletteSize"></mat-icon>
 </button>
 <mat-menu #menu="matMenu" [xPosition]="position?.x" [yPosition]="position?.y">
   <button
     *ngFor="let option of $themeOptions | async"
     mat-menu-item
     (click)="changeTheme(option.value)">
-    <mat-icon role="img" svgicon="theme-example" aria-hidden="true">
+    <mat-icon role="img" aria-hidden="true">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"

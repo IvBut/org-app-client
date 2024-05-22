@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./features/exchange-widget/exchange-widget.module').then(m => m.ExchangeWidgetModule)
   },
   {
+    path: 'settings',
+    loadChildren: () =>
+      import('./features/settings-widget/settings-widget.module').then(m => m.SettingsWidgetModule)
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home'

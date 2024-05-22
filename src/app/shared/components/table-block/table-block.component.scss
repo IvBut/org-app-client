@@ -1,0 +1,19 @@
+@use 'styles/mixins/mixins' as mixins;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  @include mixins.icon-size(90px)
+}
+
+.buttons {
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+}
+

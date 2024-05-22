@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Currency } from '../../../core/constants/currency';
+import { EIconName } from '../../../shared/models/icon.model';
 import { IExchangeModel } from '../model/exchange.model';
 import { ExchangeService } from '../services/exchange.service';
 
@@ -39,6 +40,8 @@ export class TodayPageComponent implements OnInit {
     { label: 'Рубли', value: Currency.RUB },
     { label: 'Злотые', value: Currency.PLN }
   ];
+  isLoading = false;
+  hasError = false;
 
   private setDataToDisplay(list: IExchangeModel[]) {
     const start = this.pageIndex * this.pageSize;
@@ -57,6 +60,8 @@ export class TodayPageComponent implements OnInit {
     this.options = newOptions;
     if (isAllSelected) {
       this.selectedOptions = newOptions.map(el => el.value);
+    } else {
+      this.selectedOptions = [...filter];
     }
     this.filteredData = isAllSelected
       ? this.data
@@ -78,15 +83,36 @@ export class TodayPageComponent implements OnInit {
   handleSelect(list: string[]) {
     this.setFilteredData(list);
   }
-  ngOnInit() {
-    this.exChangeService.getRate({ periodicity: '0' }).subscribe(
-      data => {
+
+  private fetch() {
+    this.isLoading = true;
+    this.hasError = false;
+    this.data = [];
+    this.setFilteredData(this.selectedOptions);
+    this.cdr.markForCheck();
+    this.exChangeService.getRate({ periodicity: '0' }).subscribe({
+      next: data => {
         this.data = data;
         this.setFilteredData(this.selectedOptions);
+        this.isLoading = false;
+        this.hasError = false;
+        this.cdr.markForCheck();
       },
-      error => {
-        console.log('>>>> Error', error);
+      error: () => {
+        this.isLoading = false;
+        this.hasError = true;
+        this.data = [];
+        this.setFilteredData(this.selectedOptions);
+        this.cdr.markForCheck();
       }
-    );
+    });
   }
+  handleFetch() {
+    this.fetch();
+  }
+  ngOnInit() {
+    this.fetch();
+  }
+
+  protected readonly EIconName = EIconName;
 }

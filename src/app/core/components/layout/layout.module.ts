@@ -7,7 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { SidenavLinkModule } from '../../../shared/components/sidenav-link/sidenav-link.module';
-import { ThemeSwitcherModule } from '../../../shared/components/theme-switcher/theme-switcher.module';
+import { IconSizeModule } from '../../../shared/directives/icon-size/icon-size/icon-size.module';
 import { SidenavContentAreaDirective } from './directive/sidenav-content-area.directive';
 import { SidebarService } from './services/sidebarService';
 import { ExchangeSidebarComponent } from './sidebar/exchange-sidebar.component';
@@ -26,12 +26,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
   imports: [
     CommonModule,
     MatToolbarModule,
-    ThemeSwitcherModule,
     MatSidenavModule,
     MatNavList,
     MatIcon,
     MatButtonModule,
-    SidenavLinkModule
+    SidenavLinkModule,
+    IconSizeModule
   ],
   exports: [
     ToolbarComponent,

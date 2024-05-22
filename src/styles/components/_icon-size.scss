@@ -1,0 +1,21 @@
+@use 'styles/variables/varialbes' as variables;
+@use 'styles/mixins/mixins' as mixins;
+
+$size-map: (
+  'xxsmall': variables.$unitSize * 1.5,
+  'xsmall': variables.$unitSize * 2,
+  'small': variables.$unitSize * 2.5,
+  'medium': variables.$unitSize * 3,
+  'large': variables.$unitSize * 3.5,
+  'xlarge': variables.$unitSize * 4,
+  'xxlarge': variables.$unitSize * 4.5,
+  'xxxlarge': variables.$unitSize * 5,
+);
+
+mat-icon.icon-size {
+  @each $key, $val in $size-map {
+    &--#{$key} {
+      @include mixins.icon-size($val)
+    }
+  }
+}

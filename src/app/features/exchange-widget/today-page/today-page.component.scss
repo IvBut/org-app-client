@@ -10,10 +10,14 @@
   }
 }
 
-.mat-mdc-row .mat-mdc-cell {
-  cursor: pointer;
+.refresh-row {
+  text-align: right;
 }
 
-.mat-mdc-row:hover .mat-mdc-cell {
- background: var(--mdc-checkbox-selected-hover-icon-color);
+.empty-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
 }

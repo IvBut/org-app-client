@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { catchError, of } from 'rxjs';
 
+import { EIconName, EIconSize } from '../../models/icon.model';
 import { IThemeSwitcherOption, TThemeMenuPosition } from '../../models/theme-switcher.model';
 import { ThemeService } from '../../services/themeService';
 
@@ -12,8 +13,9 @@ const DEFAULT_POSITION: TThemeMenuPosition = { x: 'before', y: 'below' };
   styleUrl: './theme-switcher.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ThemeSwitcherComponent implements OnInit {
+export class ThemeSwitcherComponent {
   private themeService: ThemeService = inject(ThemeService);
+  protected readonly EIconName = EIconName;
 
   $themeOptions = this.themeService
     .getThemeOptions()
@@ -27,10 +29,7 @@ export class ThemeSwitcherComponent implements OnInit {
     }
   })
   position: TThemeMenuPosition = DEFAULT_POSITION;
-
-  ngOnInit() {
-    this.themeService.setTheme('deeppurple-amber');
-  }
+  @Input() paletteSize?: EIconSize = EIconSize.XXXLarge;
 
   changeTheme(name: string) {
     this.themeService.setTheme(name);

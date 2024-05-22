@@ -12,16 +12,15 @@
 </ng-container>
 
 <ng-template #backIcon>
-  <mat-icon class="back" color="primary">keyboard_backspace</mat-icon>
+  <mat-icon color="primary" [svgIcon]="EIconName.ARROW_BACK" curIconSize="XLarge"></mat-icon>
 </ng-template>
 
 <ng-template #navigateIcon let-item>
-  <mat-icon color="primary">{{ item?.icon ?? 'maximize' }}</mat-icon>
+  <mat-icon color="primary" [svgIcon]="item.icon" curIconSize="Medium"></mat-icon>
 </ng-template>
 
 <ng-template #text let-item>
-  <h3 *ngIf="!item?.isBack; else backText">{{ item?.text }}</h3>
-  <ng-template #backText>
-    <h2>{{ item?.text || 'Назад' }}</h2>
-  </ng-template>
+  <h3 class="icon-text" [class.icon-text--bold]="item?.isBack">
+    {{ item?.text || (item?.isBack ? 'Назад' : '') }}
+  </h3>
 </ng-template>

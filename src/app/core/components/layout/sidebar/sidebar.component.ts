@@ -6,6 +6,7 @@ import {
   ViewChild
 } from '@angular/core';
 
+import { EIconName } from '../../../../shared/models/icon.model';
 import { SidenavContentAreaDirective } from '../directive/sidenav-content-area.directive';
 import { SidebarService } from '../services/sidebarService';
 
@@ -17,6 +18,7 @@ import { SidebarService } from '../services/sidebarService';
 })
 export class SidebarComponent implements AfterViewInit {
   sidebarService = inject(SidebarService);
+  protected readonly EIconName = EIconName;
 
   @ViewChild(SidenavContentAreaDirective, { static: false })
   curSidenavContentArea: SidenavContentAreaDirective;

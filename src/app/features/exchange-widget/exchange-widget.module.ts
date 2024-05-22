@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatOption, MatSelect } from '@angular/material/select';
 import {
   MatCell,
@@ -13,14 +15,18 @@ import {
   MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
+  MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTable
 } from '@angular/material/table';
+import { TableBlockModule } from '../../shared/components/table-block/table-block.module';
 import { ExchangeComponent } from './exchange.component';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { ExchangeService } from './services/exchange.service';
 import { TodayPageComponent } from './today-page/today-page.component';
+import { MatIconButton } from '@angular/material/button';
+import { IconSizeModule } from '../../shared/directives/icon-size/icon-size/icon-size.module';
 
 const routes: Routes = [
   {
@@ -66,7 +72,13 @@ const routes: Routes = [
     MatPaginator,
     MatSelect,
     MatOption,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatNoDataRow,
+    MatProgressSpinner,
+    MatIcon,
+    TableBlockModule,
+    MatIconButton,
+    IconSizeModule
   ],
   providers: [ExchangeService]
 })

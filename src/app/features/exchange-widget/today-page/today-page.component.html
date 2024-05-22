@@ -1,9 +1,16 @@
 <mat-form-field color="accent" appearance="outline">
   <mat-label>Показать курс(ы)</mat-label>
   <mat-select multiple [value]="selectedOptions" (valueChange)="handleSelect($event)">
-    <mat-option *ngFor="let opt of options" [disabled]="!!opt?.disabled" [value]="opt.value">{{ opt.label }}</mat-option>
+    <mat-option *ngFor="let opt of options" [disabled]="!!opt?.disabled" [value]="opt.value">{{
+      opt.label
+    }}</mat-option>
   </mat-select>
 </mat-form-field>
+<div class="refresh-row">
+  <button mat-icon-button color="accent" (click)="handleFetch()">
+    <mat-icon [svgIcon]="EIconName.REFRESH" curIconSize="Large"></mat-icon>
+  </button>
+</div>
 <table mat-table [dataSource]="dataToDisplay">
   <ng-container matColumnDef="currency">
     <th mat-header-cell *matHeaderCellDef>Валюта</th>
@@ -24,6 +31,14 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td colspan="1000">
+      <div class="empty-row">
+        <ng-container
+          *ngIf="isLoading || hasError; then loadOrError; else emptyBlock"></ng-container>
+      </div>
+    </td>
+  </tr>
 </table>
 <mat-paginator
   *ngIf="total > pageSize"
@@ -33,3 +48,15 @@
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
   (page)="handleOnPage($event)"></mat-paginator>
+
+<ng-template #emptyBlock><cur-table-block type="EMPTY_DATA"></cur-table-block></ng-template>
+
+<ng-template #loadOrError>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="hasError">
+    <cur-table-block
+      type="ERROR"
+      [buttons]="[{ btnText: 'Обновить', id: 'RefreshBtn' }]"
+      (buttonClick)="handleFetch()"></cur-table-block>
+  </div>
+</ng-template>

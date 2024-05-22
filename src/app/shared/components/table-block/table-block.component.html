@@ -1,0 +1,11 @@
+<mat-icon class="icon" [color]="icon.color" [svgIcon]="icon.svgIcon"></mat-icon>
+<h2 *ngIf="innerTitle">{{ innerTitle }}</h2>
+<div class="buttons" *ngIf="buttons?.length">
+  <button
+    mat-button
+    *ngFor="let btn of buttons; trackBy: trackByFn"
+    color="primary"
+    (click)="handleClick(btn.id)">
+    {{ btn.btnText }}
+  </button>
+</div>

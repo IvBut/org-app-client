@@ -1,6 +1,4 @@
-$sidebar-footer-height: 60px;
-$sidebar-min-width: 60px;
-$sidebar-transition: all 0.5s ease;
+@use 'styles/variables/varialbes' as varialbes;
 
 .sidenav-container {
   height: 100%;
@@ -13,13 +11,13 @@ $sidebar-transition: all 0.5s ease;
   bottom: 0;
   width: 280px;
   z-index: 2;
-  transition: $sidebar-transition;
+  transition: varialbes.$sidebar-transition;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
   &-close {
-    width: $sidebar-min-width;
+    width: varialbes.$sidebar-min-width;
   }
 
   &-header {
@@ -27,7 +25,7 @@ $sidebar-transition: all 0.5s ease;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - $sidebar-footer-height);
+    height: calc(100% - #{varialbes.$sidebar-footer-height});
     overflow-y: auto;
   }
 
@@ -35,7 +33,7 @@ $sidebar-transition: all 0.5s ease;
     position: absolute;
     bottom: 0;
     left: 0;
-    height: $sidebar-footer-height;
+    height: varialbes.$sidebar-footer-height;
     width: 100%;
     display: grid;
     place-items: center;
@@ -48,14 +46,10 @@ $sidebar-transition: all 0.5s ease;
 
       .mat-icon {
         cursor: pointer;
-        font-size: 36px;
-        width: 45px;
-        height: 45px;
-        line-height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: $sidebar-transition;
+        transition: varialbes.$sidebar-transition;;
         &-fliped {
           transform: rotate(180deg);
         }
@@ -67,7 +61,7 @@ $sidebar-transition: all 0.5s ease;
 .sidenav-content {
   box-sizing: border-box;
   display: block;
-  height: calc(100% - $sidebar-min-width);
+  height: calc(100% - #{varialbes.$sidebar-min-width});
   max-height: 100%;
   padding: 20px 32px;
 }
