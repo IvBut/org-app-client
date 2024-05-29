@@ -11,8 +11,16 @@ import { ExchangeSidebarComponent } from '../../core/components/layout/sidebar/e
 
 @Component({
   selector: 'cur-exchange',
-  template: '<h1>Exchange</h1><router-outlet></router-outlet>',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: '<router-outlet></router-outlet>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+      }
+    `
+  ]
 })
 export class ExchangeComponent implements AfterViewInit, OnDestroy {
   sidebarService = inject(SidebarService);

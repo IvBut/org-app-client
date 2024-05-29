@@ -6,14 +6,14 @@ import {
   OnInit
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Currency } from '../../../core/constants/currency';
-import { EIconName } from '../../../shared/models/icon.model';
-import { IExchangeModel } from '../model/exchange.model';
-import { ExchangeService } from '../services/exchange.service';
+import { CurrencyModel } from '../../../../core/models/currency.model';
+import { EIconName } from '../../../../shared/models/icon.model';
+import { IExchangeModel } from '../../model/exchange.model';
+import { ExchangeService } from '../../services/exchange.service';
 
 const DEFAULT_OPTIONS = [
-  { label: 'Доллары', value: Currency.USD },
-  { label: 'Евро', value: Currency.EUR }
+  { label: 'Доллары', value: CurrencyModel.USD },
+  { label: 'Евро', value: CurrencyModel.EUR }
 ];
 
 @Component({
@@ -37,8 +37,8 @@ export class TodayPageComponent implements OnInit {
   options: { label: string; value: string; disabled?: boolean }[] = [
     { label: 'Выбрать всё', value: 'ALL' },
     ...DEFAULT_OPTIONS,
-    { label: 'Рубли', value: Currency.RUB },
-    { label: 'Злотые', value: Currency.PLN }
+    { label: 'Рубли', value: CurrencyModel.RUB },
+    { label: 'Злотые', value: CurrencyModel.PLN }
   ];
   isLoading = false;
   hasError = false;

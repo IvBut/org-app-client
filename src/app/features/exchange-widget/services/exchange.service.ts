@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { getCurrencySymbolByAbbreviation } from '../../../core/utils/currency';
 import { IExchangeDTO, IExchangeModel } from '../model/exchange.model';
+import { IRateHistoryDTO, IRateHistoryModel } from '../model/rate-history.model';
 
 @Injectable()
 export class ExchangeService {
@@ -27,5 +28,14 @@ export class ExchangeService {
           }));
         })
       );
+  }
+
+  getRateDynamic(currencyId: string, dto: IRateHistoryDTO) {
+    return this.http.get<IRateHistoryModel[]>(
+      this.getUrl(`/exrates/rates/dynamics/${currencyId}`),
+      {
+        params: { ...dto }
+      }
+    );
   }
 }

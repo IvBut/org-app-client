@@ -10,7 +10,8 @@ export enum EIconName {
   HISTORY = 'history',
   PALETTE = 'palette',
   FILTER_ALT_OFF = 'filter_alt_off',
-  REFRESH = 'refresh'
+  REFRESH = 'refresh',
+  CLOSE = 'close'
 }
 
 export enum EIconSize {
@@ -79,5 +80,9 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('refresh'),
     name: EIconName.REFRESH
+  },
+  {
+    fileName: getPath('close'),
+    name: EIconName.CLOSE
   }
 ];

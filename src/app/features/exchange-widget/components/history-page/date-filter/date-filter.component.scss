@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .date-range-section {
+    margin-right: 20px;
+    &-item {
+      display: flex;
+      align-items: center;
+      padding-bottom: 10px;
+    }
+  }
+
+  .currency-section {
+    min-width: 350px;
+    &-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      &-field {
+        width: 100%;
+      }
+    }
+
+  }
+
+  .apply-section {
+    margin-left: auto;
+    padding: 0 80px;
+    text-align: center;
+  }
+}
+
+.clear-button {
+  cursor: pointer;
+  margin-left: 10px;
+  transform: translateY(-10px);
+}
+
+

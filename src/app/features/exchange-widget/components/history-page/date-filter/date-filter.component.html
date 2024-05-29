@@ -1,0 +1,64 @@
+<div class="wrapper">
+  <div class="date-range-section">
+    <div class="date-range-section-item">
+      <mat-form-field color="primary">
+        <mat-label>Выберите период</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="range" [min]="min" [max]="max">
+          <input matStartDate formControlName="start" placeholder="Дата с" />
+          <input matEndDate formControlName="end" placeholder="Дата по" />
+        </mat-date-range-input>
+        <mat-hint>{{ hint }}</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+      </mat-form-field>
+      <mat-icon
+        class="clear-button"
+        color="accent"
+        (click)="handleClearRange()"
+        [curIconSize]="'XXXLarge'"
+        [svgIcon]="EIconName.CLOSE"></mat-icon>
+    </div>
+    <mat-chip-listbox [value]="chipsValue" (change)="handleSelection($event)">
+      @for (chip of CONFIG; track chip.value.id) {
+        <mat-chip-option
+          disableRipple="true"
+          color="primary"
+          [id]="chip.value.id"
+          [value]="chip.value"
+          [highlighted]="chipsValue?.id === chip.value.id"
+          >{{ chip.label }}</mat-chip-option
+        >
+      }
+    </mat-chip-listbox>
+  </div>
+  <div class="currency-section">
+    <div class="currency-section-item">
+      <mat-form-field class="currency-section-item-field">
+        <mat-label>Валюта</mat-label>
+        <input type="text" matInput [formControl]="autocmpControl" [matAutocomplete]="auto" />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option"
+              >{{ option.label }}<small>&nbsp;({{ option.id }})</small></mat-option
+            >
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-icon
+        class="clear-button"
+        color="accent"
+        (click)="handleClearAcmp()"
+        [curIconSize]="'XXXLarge'"
+        [svgIcon]="EIconName.CLOSE"></mat-icon>
+    </div>
+  </div>
+  <div class="apply-section">
+    <button
+      color="primary"
+      mat-flat-button
+      [disabled]="!range.valid || !autocmpControl.valid"
+      (click)="handleExec()">
+      Применить
+    </button>
+  </div>
+</div>
