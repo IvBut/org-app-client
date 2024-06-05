@@ -1,2 +1,42 @@
-<h1>Сформировать график изменения валюты</h1>
+<h1>Сформировать график изменения стоимости валюты</h1>
 <cur-date-filter class="filter-section" (submitFilterData)="handleDates($event)"></cur-date-filter>
+<mat-divider class="page-divider"></mat-divider>
+
+@if (isLoading$ | async) {
+  <div class="no-content-block">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else if (hasError$ | async) {
+  <div class="no-content-block">
+    <cur-table-block [type]="'ERROR'"></cur-table-block>
+  </div>
+} @else if (isEmpty$ | async) {
+  <div class="no-content-block">
+    <cur-table-block [type]="'EMPTY_DATA'"></cur-table-block>
+  </div>
+} @else {
+  @if (data$ | async; as chartData) {
+    <apx-chart
+      [title]="chartData.title"
+      [series]="chartData.series"
+      [chart]="{ height: 350, type: 'line' }"
+      [xaxis]="chartData.xaxis"
+      [yaxis]="[
+        {
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true
+          }
+        }
+      ]"
+      [tooltip]="{
+        marker: {
+          show: false
+        }
+      }"
+      [legend]="chartData.legend">
+    </apx-chart>
+  }
+}

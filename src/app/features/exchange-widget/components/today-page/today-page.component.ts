@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { CurrencyModel } from '../../../../core/models/currency.model';
+import { dateFormatter, getToday } from '../../../../core/utils/date';
 import { EIconName } from '../../../../shared/models/icon.model';
 import { IExchangeModel } from '../../model/exchange.model';
 import { ExchangeService } from '../../services/exchange.service';
@@ -42,6 +43,10 @@ export class TodayPageComponent implements OnInit {
   ];
   isLoading = false;
   hasError = false;
+
+  get todayDate() {
+    return dateFormatter(getToday());
+  }
 
   private setDataToDisplay(list: IExchangeModel[]) {
     const start = this.pageIndex * this.pageSize;

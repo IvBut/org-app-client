@@ -14,4 +14,10 @@ export enum EDateChip {
   LAST_YEAR = 'LAST_YEAR'
 }
 
-export type TOutputDateFilter = { start: Date; end: Date; code: string };
+export type TOutputDateFilter = {
+  start: Date;
+  end: Date;
+  code: string;
+  scale: number;
+  label: string;
+};

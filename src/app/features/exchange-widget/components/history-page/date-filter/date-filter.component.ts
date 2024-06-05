@@ -126,7 +126,9 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   handleExec() {
     this.submitFilterData.emit({
       ...this.range.value,
-      code: this.autocmpControl.value.value
+      code: this.autocmpControl.value.value,
+      scale: this.autocmpControl.value.scale,
+      label: this.autocmpControl.value.label
     } as TOutputDateFilter);
   }
 

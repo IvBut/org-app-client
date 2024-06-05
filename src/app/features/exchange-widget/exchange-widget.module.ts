@@ -7,6 +7,7 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { MatButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { MatChip, MatChipListbox, MatChipOption, MatChipSet } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDivider } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
@@ -26,6 +27,7 @@ import {
   MatRowDef,
   MatTable
 } from '@angular/material/table';
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { TableBlockModule } from '../../shared/components/table-block/table-block.module';
 import { IconSizeModule } from '../../shared/directives/icon-size/icon-size/icon-size.module';
 import { DateFilterComponent } from './components/history-page/date-filter/date-filter.component';
@@ -97,7 +99,9 @@ const routes: Routes = [
     MatMiniFabButton,
     MatAutocomplete,
     MatAutocompleteTrigger,
-    MatInput
+    MatInput,
+    NgApexchartsModule,
+    MatDivider
   ],
   providers: [ExchangeService]
 })
