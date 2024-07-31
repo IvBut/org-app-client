@@ -12,6 +12,7 @@ import { ISidenavLinkModel } from '../../../models/sidenav-link.model';
 })
 export class SidenavLinksComponent {
   sidebarService = inject(SidebarService);
+  isOpen$ = this.sidebarService.isOpen;
   protected readonly EIconName = EIconName;
 
   @Input()

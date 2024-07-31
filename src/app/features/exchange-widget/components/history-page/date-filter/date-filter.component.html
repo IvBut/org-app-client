@@ -8,6 +8,14 @@
           <input matEndDate formControlName="end" placeholder="Дата по" />
         </mat-date-range-input>
         <mat-hint>{{ hint }}</mat-hint>
+        @if (range.invalid && (range.touched || range.dirty)) {
+          <mat-error>
+            @for (item of rangeErrors; track item) {
+              <span>{{ item }}</span
+              ><br />
+            }
+          </mat-error>
+        }
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker touchUi #picker></mat-date-range-picker>
       </mat-form-field>
@@ -43,6 +51,14 @@
             >
           }
         </mat-autocomplete>
+        @if (autocmpControl.invalid && (autocmpControl.touched || autocmpControl.dirty)) {
+          <mat-error>
+            @for (item of acmpErrors; track item) {
+              <span>{{ item }}</span
+              ><br />
+            }
+          </mat-error>
+        }
       </mat-form-field>
       <mat-icon
         class="clear-button"

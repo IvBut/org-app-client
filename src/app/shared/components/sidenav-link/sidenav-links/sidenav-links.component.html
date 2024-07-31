@@ -1,14 +1,16 @@
 <ng-container *ngFor="let item of links">
-  <cur-sidenav-link [routerLink]="item.routerLink" [isOpen]="sidebarService.isOpen | async">
-    <ng-container
-      icon
-      [ngTemplateOutlet]="!!item?.isBack ? backIcon : navigateIcon"
-      [ngTemplateOutletContext]="{ $implicit: item }">
-    </ng-container>
-    <ng-container
-      [ngTemplateOutlet]="text"
-      [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
-  </cur-sidenav-link>
+  <ng-container *ngIf="{ isOpen: isOpen$ | async } as flag">
+    <cur-sidenav-link [routerLink]="item.routerLink" [isOpen]="flag.isOpen">
+      <ng-container
+        icon
+        [ngTemplateOutlet]="!!item?.isBack ? backIcon : navigateIcon"
+        [ngTemplateOutletContext]="{ $implicit: { iconConfig: item, isOpen: flag.isOpen } }">
+      </ng-container>
+      <ng-container
+        [ngTemplateOutlet]="text"
+        [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
+    </cur-sidenav-link>
+  </ng-container>
 </ng-container>
 
 <ng-template #backIcon>
@@ -16,7 +18,12 @@
 </ng-template>
 
 <ng-template #navigateIcon let-item>
-  <mat-icon color="primary" [svgIcon]="item.icon" curIconSize="Medium"></mat-icon>
+  <mat-icon
+    color="primary"
+    [svgIcon]="item.iconConfig.icon"
+    curIconSize="Medium"
+    [matTooltip]="!item.isOpen ? item.iconConfig?.text || '' : ''"
+    [matTooltipPosition]="'right'"></mat-icon>
 </ng-template>
 
 <ng-template #text let-item>

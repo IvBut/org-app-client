@@ -50,7 +50,7 @@ export class HistoryPageComponent {
           showForSingleSeries: true,
           position: 'bottom',
           horizontalAlign: 'center',
-          customLegendItems: [`max - ${Math.max(...nums)}`, `mix - ${Math.min(...nums)}`]
+          customLegendItems: [`max - ${Math.max(...nums)}`, `min - ${Math.min(...nums)}`]
         },
         series: [
           {

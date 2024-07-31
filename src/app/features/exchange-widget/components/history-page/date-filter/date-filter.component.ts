@@ -6,7 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { isEqual, isValid } from 'date-fns';
 import { Observable, Subject, map, startWith, takeUntil } from 'rxjs';
@@ -31,6 +31,20 @@ const lastWeek = getLastWeekRange();
 const lastMonth = getLastMonthRange();
 const lastYear = getLastYearRange();
 
+const ERRORS = {
+  required: 'Поле обязательно для заполненния',
+  invalidAutocompleteObject: 'Выберите значение из списка'
+};
+
+function autocompleteValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: boolean } | null => {
+    if (typeof control.value === 'string' && control.value) {
+      return { invalidAutocompleteObject: true };
+    }
+    return null;
+  };
+}
+
 @Component({
   selector: 'cur-date-filter',
   templateUrl: './date-filter.component.html',
@@ -46,15 +60,28 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   });
   min = lastYear[0];
   max = today;
-  autocmpControl = new FormControl<TDateAcmpOption | null>(null, Validators.required);
   options: TDateAcmpOption[] = getNbRbCurrencies().map(el => ({
     label: el.name,
     value: el.nbrb.curId.toString(),
     id: el.currencyId,
     scale: el.nbrb.curScale
   }));
+  autocmpControl = new FormControl<TDateAcmpOption | null>(null, [
+    Validators.required,
+    autocompleteValidator()
+  ]);
   filteredOptions: Observable<TDateAcmpOption[]>;
   @Output() submitFilterData = new EventEmitter<TOutputDateFilter>();
+  private setFieldErrors(validationErrors: Validators): string[] {
+    if (!validationErrors) return [];
+    return Object.entries(validationErrors).reduce((acc, error) => {
+      const [key, val] = error;
+      if (ERRORS[key] && val) {
+        acc.push(ERRORS[key]);
+      }
+      return acc;
+    }, []);
+  }
 
   protected readonly CONFIG: IDateChipsModel[] = [
     {
@@ -82,6 +109,19 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   chipsValue: IDateChipsModel['value'] | null = null;
   get hint() {
     return `c ${dateFormatter(this.min)} по ${dateFormatter(this.max)}`;
+  }
+
+  get acmpErrors(): string[] {
+    return this.setFieldErrors(this.autocmpControl.errors);
+  }
+
+  get rangeErrors(): string[] {
+    return Array.from(
+      new Set([
+        ...this.setFieldErrors(this.range.controls.start.errors),
+        ...this.setFieldErrors(this.range.controls.end.errors)
+      ])
+    );
   }
 
   ngOnInit() {

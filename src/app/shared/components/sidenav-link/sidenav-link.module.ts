@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { MatTooltip } from '@angular/material/tooltip';
 import { IconSizeModule } from '../../directives/icon-size/icon-size/icon-size.module';
 import { SidenavLinkComponent } from './sidenav-link.component';
 import { SidenavLinksComponent } from './sidenav-links/sidenav-links.component';
@@ -18,7 +19,8 @@ import { SidenavLinksComponent } from './sidenav-links/sidenav-links.component';
     NgForOf,
     AsyncPipe,
     NgTemplateOutlet,
-    IconSizeModule
+    IconSizeModule,
+    MatTooltip
   ]
 })
 export class SidenavLinkModule {}
