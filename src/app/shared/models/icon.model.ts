@@ -11,7 +11,9 @@ export enum EIconName {
   PALETTE = 'palette',
   FILTER_ALT_OFF = 'filter_alt_off',
   REFRESH = 'refresh',
-  CLOSE = 'close'
+  CLOSE = 'close',
+  CV = 'cv',
+  ADD = 'add'
 }
 
 export enum EIconSize {
@@ -84,5 +86,13 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('close'),
     name: EIconName.CLOSE
+  },
+  {
+    fileName: getPath('cv'),
+    name: EIconName.CV
+  },
+  {
+    fileName: getPath('add'),
+    name: EIconName.ADD
   }
 ];

@@ -13,6 +13,10 @@ const routes: Routes = [
       import('./features/exchange-widget/exchange-widget.module').then(m => m.ExchangeWidgetModule)
   },
   {
+    path: 'cv',
+    loadChildren: () => import('./features/cv-widget/cv-widget.module').then(m => m.CvWidgetModule)
+  },
+  {
     path: 'settings',
     loadChildren: () =>
       import('./features/settings-widget/settings-widget.module').then(m => m.SettingsWidgetModule)
