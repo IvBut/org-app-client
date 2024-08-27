@@ -1,3 +1,5 @@
+@use 'styles/mixins/mixins' as mixins;
+
 a {
   display: flex;
   flex-direction: row;
@@ -12,9 +14,7 @@ a {
   transition: background-color 75ms ease-out;
 
   .text-container {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include mixins.textOverflow()
   }
 
   &:hover {

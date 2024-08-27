@@ -9,16 +9,11 @@
   top: 64px;
   left: 0;
   bottom: 0;
-  width: 280px;
   z-index: 2;
   transition: varialbes.$sidebar-transition;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  &-close {
-    width: varialbes.$sidebar-min-width;
-  }
 
   &-header {
     position: absolute;
@@ -58,10 +53,60 @@
   }
 }
 
+.resize-handle {
+  height: 100%;
+
+  background-color: transparent;
+  width: 2px;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  cursor: ew-resize;
+
+  // prevent text selection while dragging
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  transition: background-color 0.2s ease-out;
+
+  &:hover {
+    width: 3px;
+    //background-color: rgb(93, 159, 235);
+    background-color: varialbes.$sidebar-resize-color;
+  }
+
+  // buffer to make it easier to grab the resize handle
+  &::after {
+    content: "";
+    display: block;
+
+    height: 100%;
+
+    width: 24px;
+
+    position: absolute;
+    right: -12px;
+    z-index: 1;
+  }
+
+  // buffer to avoid flickering cursor when resizing
+  &.resizing::after {
+    width: 100px;
+    right: calc(-100px / 2);
+  }
+}
+
 .sidenav-content {
   box-sizing: border-box;
   display: block;
   height: calc(100% - #{varialbes.$sidebar-min-width});
   max-height: 100%;
   padding: 20px 32px;
+  transition: varialbes.$sidebar-transition;
 }

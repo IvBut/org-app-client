@@ -22,12 +22,19 @@
     color="primary"
     [svgIcon]="item.iconConfig.icon"
     curIconSize="Medium"
-    [matTooltip]="!item.isOpen ? item.iconConfig?.text || '' : ''"
-    [matTooltipPosition]="'right'"></mat-icon>
+    [matTooltip]="item.iconConfig?.text || ''"
+    [matTooltipPosition]="'right'"
+    [matTooltipDisabled]="item.isOpen"></mat-icon>
 </ng-template>
 
 <ng-template #text let-item>
-  <h3 class="icon-text" [class.icon-text--bold]="item?.isBack">
+  <h3
+    #textElement
+    class="icon-text"
+    [matTooltip]="item?.text || ''"
+    [matTooltipPosition]="'right'"
+    [matTooltipDisabled]="textElement.scrollWidth <= textElement.clientWidth"
+    [class.icon-text--bold]="item?.isBack">
     {{ item?.text || (item?.isBack ? 'Назад' : '') }}
   </h3>
 </ng-template>

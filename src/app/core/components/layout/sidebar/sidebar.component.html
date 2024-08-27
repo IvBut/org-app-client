@@ -1,6 +1,11 @@
-<ng-container *ngIf="{ isOpen: sidebarService.isOpen | async } as context">
+<ng-container
+  *ngIf="{
+    isOpen: sidebarService.isOpen | async,
+    resizingEvent: sidebarService.resizing | async,
+    sidebarWidth: sidebarService.sideBarWidth | async
+  } as context">
   <mat-sidenav-container class="sidenav-container" autosize="false" hasBackdrop="false">
-    <mat-sidenav class="sidebar" [class.sidebar-close]="!context.isOpen" opened="true" mode="side">
+    <mat-sidenav class="sidebar" [style.width.px]="context.sidebarWidth" opened="true" mode="side">
       <div class="sidebar-header">
         <ng-template curSidenavContentArea></ng-template>
       </div>
@@ -13,8 +18,12 @@
             curIconSize="XXXLarge"></mat-icon>
         </div>
       </div>
+      <div
+        class="resize-handle"
+        [class.resizing]="context.resizingEvent.isResizing"
+        (mousedown)="startResizing($event, context.sidebarWidth)"></div>
     </mat-sidenav>
-    <mat-sidenav-content class="sidenav-content">
+    <mat-sidenav-content [style.margin-left.px]="context.sidebarWidth" class="sidenav-content">
       <ng-content></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>

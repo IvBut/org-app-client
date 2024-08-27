@@ -1,4 +1,7 @@
+@use 'styles/mixins/mixins' as mixins;
+
 .icon-text {
+  @include mixins.textOverflow();
   margin: 0;
   &--bold {
     font-weight: 500;
