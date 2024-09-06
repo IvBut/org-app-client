@@ -13,7 +13,8 @@ export enum EIconName {
   REFRESH = 'refresh',
   CLOSE = 'close',
   CV = 'cv',
-  ADD = 'add'
+  ADD = 'add',
+  PHOTO_CAMERA = 'photo_camera'
 }
 
 export enum EIconSize {
@@ -94,5 +95,9 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('add'),
     name: EIconName.ADD
+  },
+  {
+    fileName: getPath('photo_camera'),
+    name: EIconName.PHOTO_CAMERA
   }
 ];

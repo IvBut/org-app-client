@@ -1,1 +1,39 @@
-<p>create-cv-page works!</p>
+<h1>Создание нового резюме</h1>
+<form [formGroup]="cvWizardData">
+  <mat-stepper linear="true">
+    <mat-step [stepControl]="cvWizardData.controls.personalData">
+      <ng-template matStepLabel>Персональные данные</ng-template>
+      <cur-personal-data-form
+        class="form-wrapper"
+        [controlKey]="'personalData'"></cur-personal-data-form>
+      <div class="navigate-buttons-wrapper">
+        <button
+          class="next"
+          mat-flat-button
+          color="primary"
+          type="button"
+          matStepperNext
+          (click)="next('personalData')">
+          Далее
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <h2>second</h2>
+      <div class="navigate-buttons-wrapper">
+        <button mat-stroked-button color="primary" type="button" matStepperPrevious>
+          На шаг назад
+        </button>
+        <button
+          class="next"
+          mat-flat-button
+          color="primary"
+          type="button"
+          matStepperNext
+          (click)="next('personalData')">
+          Далее
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>

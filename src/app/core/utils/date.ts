@@ -33,3 +33,13 @@ export const getLastYearRange = () => {
   const today = getToday();
   return [dateFns.subYears(today, 1), today];
 };
+
+export const geYearsBefore = (count: number) => {
+  const today = getToday();
+  return dateFns.subYears(today, count);
+};
+
+export const geYearsAfter = (count: number) => {
+  const today = getToday();
+  return dateFns.addYears(today, count);
+};

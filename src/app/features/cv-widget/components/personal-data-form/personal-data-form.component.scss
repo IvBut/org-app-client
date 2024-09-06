@@ -1,0 +1,50 @@
+.header {
+  margin-top: 20px;
+  display: flex;
+  &-image-wrapper {
+    flex: 0 0 auto;
+  }
+
+  &-controls-wrapper {
+    padding-left: 20px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    mat-form-field {
+      width: 100%;
+      &:last-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.main-content {
+  margin-top: 40px;
+  &-row {
+    margin-top: 20px;
+  }
+}
+
+.middle-name-row {
+  display: flex;
+  .middle-name {
+    width: 80%;
+  }
+  .no-middle-name {
+    margin-left: auto;
+  }
+}
+
+.two_controls {
+  mat-form-field {
+    width: 50%;
+    &:first-child {
+      padding-right: 10px;
+    }
+    &:last-child {
+      padding-left: 10px;
+    }
+  }
+}
+

@@ -1,0 +1,13 @@
+.form-wrapper {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.navigate-buttons-wrapper {
+  padding: 40px 50px 0 50px;
+  display: flex;
+  .next {
+    margin-left: auto;
+  }
+}
