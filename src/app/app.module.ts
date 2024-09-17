@@ -12,6 +12,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './core/components/layout/layout.module';
+import { ModalModule } from './core/components/modal/modal.module';
 import { ThemeService } from './shared/services/themeService';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ThemeService } from './shared/services/themeService';
     CommonModule,
     AppRoutingModule,
     RouterModule,
-    LayoutModule
+    LayoutModule,
+    ModalModule
   ],
   providers: [
     ThemeService,

@@ -1,0 +1,25 @@
+@mixin formFieldsInRow($fieldCount: 12) {
+  @for $i from 1 through $fieldCount {
+    .field-in-row-#{$i} {
+      mat-form-field {
+        width: calc(100% / #{$i});
+        @if($i > 1) {
+          &:nth-child(odd) {
+            padding-left: 8px;
+            padding-right: 8px;
+          }
+          &:nth-child(even) {
+            padding-left: 8px;
+            padding-right: 8px;
+          }
+          &:first-child {
+            padding-left: 0;
+          }
+          &:last-child {
+            padding-right: 0
+          }
+        }
+      }
+    }
+  }
+}

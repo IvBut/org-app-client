@@ -1,4 +1,5 @@
 @use 'styles/variables/varialbes' as variables;
+@use 'styles/mixins/mixins' as mixins;
 
 .mat-mdc-row .mat-mdc-cell {
   cursor: pointer;
@@ -7,3 +8,5 @@
 .mat-mdc-row:hover .mat-mdc-cell {
  background: variables.$table-row-hover-color
 }
+
+@include mixins.formFieldsInRow()

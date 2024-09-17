@@ -1,0 +1,33 @@
+@if (hasCloseIcon) {
+  <mat-icon
+    class="close-icon"
+    color="accent"
+    (click)="handleClose()"
+    [curIconSize]="'XXLarge'"
+    [svgIcon]="EIconName.CLOSE"></mat-icon>
+}
+<div class="modal-header">
+  <div class="modal-header__icon-caption">
+    <ng-container [ngTemplateOutlet]="iconContent"></ng-container>
+    <div class="modal-header__caption">
+      <h1>
+        <ng-container [ngTemplateOutlet]="captionContent"></ng-container>
+      </h1>
+    </div>
+  </div>
+  <div class="modal-header__description">
+    <ng-container [ngTemplateOutlet]="descriptionContent"></ng-container>
+  </div>
+</div>
+
+<ng-template #iconContent>
+  <ng-content select="[curModalIcon]"></ng-content>
+</ng-template>
+
+<ng-template #captionContent>
+  <ng-content select="[curModalCaption]"></ng-content>
+</ng-template>
+
+<ng-template #descriptionContent>
+  <ng-content select="[curModalDescription]"></ng-content>
+</ng-template>

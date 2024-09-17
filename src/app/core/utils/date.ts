@@ -15,6 +15,10 @@ export const getToday = () => {
   return dateFns.startOfToday();
 };
 
+export const getTomorrow = () => {
+  return dateFns.addDays(dateFns.startOfToday(), 1);
+};
+
 export const getTodayRange = () => {
   return [dateFns.startOfToday(), dateFns.startOfToday()];
 };

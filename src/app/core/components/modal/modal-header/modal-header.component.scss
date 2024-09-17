@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 20px 32px 0 32px;
+}
+
+.close-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: all .35s ease-in;
+  &:hover {
+    transform: scale(1.25);
+  }
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header__icon-caption {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.modal-header__caption {
+  overflow: hidden;
+}
+
+.modal-header__description {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.modal-header__description:empty {
+  margin: 0;
+}

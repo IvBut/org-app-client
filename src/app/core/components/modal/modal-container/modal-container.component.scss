@@ -1,0 +1,22 @@
+@use 'styles/variables/varialbes' as varialbes;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  max-height: inherit;
+  background: #fff;
+}
+
+.modal__heading-caption {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+}
+
+.modal-content {
+  overflow: hidden;
+  flex-grow: 1;
+  padding: varialbes.$unitSize*2 varialbes.$unitSize*4;
+}

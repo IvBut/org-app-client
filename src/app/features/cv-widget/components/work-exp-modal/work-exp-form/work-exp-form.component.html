@@ -1,0 +1,64 @@
+<form [formGroupName]="controlKey">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Компания</mat-label>
+      <input matInput placeholder="Введите имя" formControlName="company" />
+      <mat-error><cur-validation-errors controlKey="company"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Должность</mat-label>
+      <input matInput placeholder="Введите имя" formControlName="jobPosition" />
+      <mat-error
+        ><cur-validation-errors controlKey="jobPosition"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Локация</mat-label>
+      <input matInput placeholder="Введите имя" formControlName="location" />
+      <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Дата с</mat-label>
+      <input
+        matInput
+        [matDatepicker]="dpStart"
+        [matDatepickerFilter]="startDateFilter"
+        formControlName="startDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="dpStart"></mat-datepicker-toggle>
+      <mat-datepicker
+        #dpStart
+        panelClass="hide-date-picker-panel"
+        startView="multi-year"
+        (monthSelected)="setMonthAndYear($event, dpStart, 'startDate')">
+      </mat-datepicker>
+      <mat-error
+        ><cur-validation-errors
+          controlKey="startDate"
+          [configForErrors]="dateErrors"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Дата по</mat-label>
+      <input
+        matInput
+        [matDatepicker]="dpEnd"
+        formControlName="endDate"
+        [matDatepickerFilter]="endDateFilter" />
+      <mat-datepicker-toggle matIconSuffix [for]="dpEnd"></mat-datepicker-toggle>
+      <mat-datepicker
+        #dpEnd
+        panelClass="hide-date-picker-panel"
+        startView="multi-year"
+        (monthSelected)="setMonthAndYear($event, dpEnd, 'endDate')"></mat-datepicker>
+      <mat-error
+        ><cur-validation-errors
+          controlKey="endDate"
+          [configForErrors]="dateErrors"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+  </div>
+</form>

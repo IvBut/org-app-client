@@ -1,0 +1,30 @@
+<button mat-button color="primary" (click)="handleAdd()">Добавить опыт работы</button>
+<div class="mt-3">
+  <mat-accordion>
+    @for (exp of list.controls; track $index) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ exp.controls.company.value }}</mat-panel-title>
+          <mat-panel-description class="header-description">
+            <span>{{ exp.controls.jobPosition.value }}</span>
+            <div class="ml-5 range">
+              <mat-icon>date_range</mat-icon>
+              <span class="ml-1">
+                {{ dateFormatter(exp.controls.startDate.value, 'MM/yyyy') }} -
+                {{ dateFormatter(exp.controls.endDate.value, 'MM/yyyy') }}
+              </span>
+            </div>
+            <div class="buttons">
+              <button mat-icon-button color="primary" (click)="handleEdit($event, $index)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="handleDelete($event, $index)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>
