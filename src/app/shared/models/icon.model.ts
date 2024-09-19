@@ -14,7 +14,9 @@ export enum EIconName {
   CLOSE = 'close',
   CV = 'cv',
   ADD = 'add',
-  PHOTO_CAMERA = 'photo_camera'
+  PHOTO_CAMERA = 'photo_camera',
+  EDIT = 'edit',
+  DELETE = 'delete'
 }
 
 export enum EIconSize {
@@ -32,6 +34,8 @@ interface IIconConfig {
   name: EIconName;
   fileName: string;
 }
+
+export type TIconSize = EIconSize | keyof typeof EIconSize;
 
 const getPath = (fileName: string) => `/assets/icons/${fileName}.svg`;
 
@@ -99,5 +103,13 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('photo_camera'),
     name: EIconName.PHOTO_CAMERA
+  },
+  {
+    fileName: getPath('edit'),
+    name: EIconName.EDIT
+  },
+  {
+    fileName: getPath('delete'),
+    name: EIconName.DELETE
   }
 ];

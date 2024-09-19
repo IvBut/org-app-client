@@ -1,11 +1,13 @@
 import * as dateFns from 'date-fns';
 import { ru } from 'date-fns/locale/ru';
 import { EDateFormats } from '../models/date.model';
+import { TNullableType } from '../models/types';
 
+export type TDateFormatterInpDate = TNullableType<Date | number | string>;
 export const dateFormatter = (
-  date: Date | number | string | undefined | null,
+  date: TDateFormatterInpDate,
   outputFormat: string = EDateFormats.DATE_WITH_DOTS,
-  emptyValue: string = '',
+  emptyValue: TNullableType<string> = '',
   options: dateFns.FormatOptions = { locale: ru }
 ) => {
   if (!date && date !== 0) return emptyValue;

@@ -1,0 +1,36 @@
+<mat-accordion [multi]="multi">
+  @for (item of expanderItems; let outerIdx = $index; track outerIdx) {
+    <mat-expansion-panel
+      [disabled]="item.isDisabled"
+      [class.expander-panel--separated]="isSeparated">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <ng-container *ngTemplateOutlet="item.title; context: { $implicit: item }"></ng-container
+        ></mat-panel-title>
+        <mat-panel-description class="header-description">
+          <div class="header-description-content">
+            <ng-container
+              *ngTemplateOutlet="
+                item.titleDescription;
+                context: { $implicit: item }
+              "></ng-container>
+          </div>
+          @if (item.actions.length) {
+            <div class="action-buttons">
+              @for (btn of item.actions; track btn.btnName) {
+                <button
+                  mat-icon-button
+                  [disabled]="btn?.disabled"
+                  [color]="btn.color"
+                  (click)="handleActionClick($event, outerIdx, btn)">
+                  <mat-icon [svgIcon]="btn.icon.name" [curIconSize]="btn.icon?.size"></mat-icon>
+                </button>
+              }
+            </div>
+          }
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngTemplateOutlet="item.content; context: { $implicit: item }"></ng-container>
+    </mat-expansion-panel>
+  }
+</mat-accordion>

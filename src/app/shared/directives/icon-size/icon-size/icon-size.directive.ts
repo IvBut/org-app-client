@@ -1,12 +1,12 @@
 import { Directive, HostBinding, Input } from '@angular/core';
-import { EIconSize } from '../../../models/icon.model';
+import { EIconSize, TIconSize } from '../../../models/icon.model';
 
 @Directive({
   selector: 'mat-icon[curIconSize]',
   standalone: false
 })
 export class IconSizeDirective {
-  @Input() curIconSize: EIconSize | keyof typeof EIconSize = EIconSize.Medium;
+  @Input() curIconSize: TIconSize = EIconSize.Medium;
 
   @HostBinding('class.icon-size--xxsmall')
   get isXXSmall() {

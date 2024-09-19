@@ -12,7 +12,10 @@ import { ControlContainer, FormArray, FormBuilder, FormGroup } from '@angular/fo
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
 import { TNullableType } from '../../../../core/models/types';
-import { dateFormatter } from '../../../../core/utils/date';
+import {
+  EExpanderItemAction,
+  TExpanderItemActionOutput
+} from '../../../../shared/components/expander/models/expander.model';
 import { IWorkExpModel, TWorkExpDataForm } from '../../model/work-exp.model';
 import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.component';
 
@@ -85,17 +88,24 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
     this.openModal('create', null);
   }
 
-  protected readonly dateFormatter = dateFormatter;
-
-  handleDelete(e: MouseEvent, idx: number) {
-    e.stopPropagation();
+  handleDelete(idx: number) {
     this.list.removeAt(idx);
     this.cdr.markForCheck();
   }
 
-  handleEdit(e: MouseEvent, idx: number) {
-    e.stopPropagation();
+  handleEdit(idx: number) {
     const group = this.list.at(idx);
     this.openModal('edit', group.value as unknown as IWorkExpModel, idx);
+  }
+
+  handleAction({ index, btnName }: TExpanderItemActionOutput) {
+    switch (btnName) {
+      case EExpanderItemAction.EDIT:
+        this.handleEdit(index);
+        break;
+      case EExpanderItemAction.DELETE:
+        this.handleDelete(index);
+        break;
+    }
   }
 }

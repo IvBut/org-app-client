@@ -1,4 +1,3 @@
-import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +11,6 @@ import {
   MatDatepickerToggle
 } from '@angular/material/datepicker';
 import { MatDivider } from '@angular/material/divider';
-import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +27,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ModalModule } from '../../core/components/modal/modal.module';
 import { ValidationErrorsModule } from '../../core/components/validation-errors/validation-errors.module';
+import { CorePipesModule } from '../../core/pipes/core-pipes.module';
+import { ExpanderModule } from '../../shared/components/expander/expander.module';
 import { IconSizeModule } from '../../shared/directives/icon-size/icon-size/icon-size.module';
 import { CreateCvPageComponent } from './components/create-cv-page/create-cv-page.component';
 import { PersonalDataFormComponent } from './components/personal-data-form/personal-data-form.component';
@@ -96,12 +96,11 @@ const routes: Routes = [
     MatDatepicker,
     MatDatepickerInput,
     MatDatepickerToggle,
-    DialogModule,
     ModalModule,
-    MatAccordion,
-    MatExpansionModule,
     MatDivider,
-    MatIconButton
+    MatIconButton,
+    ExpanderModule,
+    CorePipesModule
   ]
 })
 export class CvWidgetModule {}
