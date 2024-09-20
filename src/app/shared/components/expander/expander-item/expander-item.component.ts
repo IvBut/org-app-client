@@ -7,13 +7,15 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
+import { EIconName } from '../../../models/icon.model';
 import { ExpanderContentDirective } from '../directives/expander-content.directive';
 import { ExpanderTitleDescriptionDirective } from '../directives/expander-title-description.directive';
 import { ExpanderTitleDirective } from '../directives/expander-title.directive';
 import {
   DEFAULT_EXPANDER_ITEM_ACTIONS,
   IExpanderItemAction,
-  TExpanderItemActionOutput
+  TExpanderItemActionOutput,
+  TExpanderItemDragConfig
 } from '../models/expander.model';
 
 @Component({
@@ -23,6 +25,18 @@ import {
 })
 export class ExpanderItemComponent {
   @Input() isDisabled: boolean = false;
+
+  @Input({
+    transform: (value?: TExpanderItemDragConfig) => {
+      const DEFAULT: TExpanderItemDragConfig = {
+        isDraggable: false,
+        icon: { name: EIconName.DRAG },
+        color: 'primary'
+      };
+      return { ...DEFAULT, ...value };
+    }
+  })
+  dragConfig?: TExpanderItemDragConfig;
 
   @ContentChild(ExpanderTitleDirective, { read: TemplateRef })
   title: TemplateRef<any>;

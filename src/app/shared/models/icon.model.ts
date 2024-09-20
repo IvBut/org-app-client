@@ -16,7 +16,8 @@ export enum EIconName {
   ADD = 'add',
   PHOTO_CAMERA = 'photo_camera',
   EDIT = 'edit',
-  DELETE = 'delete'
+  DELETE = 'delete',
+  DRAG = 'drag'
 }
 
 export enum EIconSize {
@@ -111,5 +112,9 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('delete'),
     name: EIconName.DELETE
+  },
+  {
+    fileName: getPath('drag_pan'),
+    name: EIconName.DRAG
   }
 ];

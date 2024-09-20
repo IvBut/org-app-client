@@ -1,3 +1,4 @@
+import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
@@ -25,6 +26,16 @@ import { ExpanderComponent } from './expander.component';
     ExpanderTitleDescriptionDirective,
     ExpanderContentDirective
   ],
-  imports: [CommonModule, MatAccordion, MatExpansionModule, MatIcon, MatIconButton, IconSizeModule]
+  imports: [
+    CommonModule,
+    MatAccordion,
+    MatExpansionModule,
+    MatIcon,
+    MatIconButton,
+    IconSizeModule,
+    CdkDragHandle,
+    CdkDropList,
+    CdkDrag
+  ]
 })
 export class ExpanderModule {}

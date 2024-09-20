@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -5,9 +6,11 @@ import {
   Component,
   ContentChildren,
   DestroyRef,
-  inject,
+  EventEmitter,
   Input,
-  QueryList
+  Output,
+  QueryList,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExpanderItemComponent } from './expander-item/expander-item.component';
@@ -29,6 +32,8 @@ export class ExpanderComponent implements AfterViewInit {
   @Input()
   isSeparated: boolean = false;
 
+  @Output() dropEnd = new EventEmitter<CdkDragDrop<any>>();
+
   @ContentChildren(ExpanderItemComponent) expanderItems: QueryList<ExpanderItemComponent>;
 
   handleActionClick(event: MouseEvent, index: number, btn: IExpanderItemAction) {
@@ -41,5 +46,10 @@ export class ExpanderComponent implements AfterViewInit {
     this.expanderItems.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.cdr.markForCheck();
     });
+  }
+
+  drop(event: CdkDragDrop<any, any>) {
+    moveItemInArray(this.expanderItems.toArray(), event.previousIndex, event.currentIndex);
+    this.dropEnd && this.dropEnd.emit(event);
   }
 }

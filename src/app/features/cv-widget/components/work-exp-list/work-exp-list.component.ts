@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,9 +13,11 @@ import { ControlContainer, FormArray, FormBuilder, FormGroup } from '@angular/fo
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
 import { TNullableType } from '../../../../core/models/types';
+import { moveItemInFormArray } from '../../../../core/utils/formUtils';
 import {
   EExpanderItemAction,
-  TExpanderItemActionOutput
+  TExpanderItemActionOutput,
+  TExpanderItemDragConfig
 } from '../../../../shared/components/expander/models/expander.model';
 import { IWorkExpModel, TWorkExpDataForm } from '../../model/work-exp.model';
 import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.component';
@@ -39,6 +42,7 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
   parentContainer = inject(ControlContainer);
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
+  dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
 
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;
@@ -107,5 +111,10 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
         this.handleDelete(index);
         break;
     }
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    moveItemInFormArray(this.list, event.previousIndex, event.currentIndex);
+    this.cdr.markForCheck();
   }
 }

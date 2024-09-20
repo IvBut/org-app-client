@@ -34,3 +34,6 @@ export const DEFAULT_EXPANDER_ITEM_ACTIONS: IExpanderItemAction[] = [
 ];
 
 export type TExpanderItemActionOutput = { btnName: EExpanderItemAction; index: number };
+export type TExpanderItemDragConfig = { isDraggable: boolean } & Partial<
+  Pick<IExpanderItemAction, 'icon' | 'color'>
+>;

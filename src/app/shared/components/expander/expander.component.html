@@ -1,6 +1,13 @@
-<mat-accordion [multi]="multi">
+<mat-accordion
+  [multi]="multi"
+  cdkDropList
+  cdkDropListOrientation="vertical"
+  (cdkDropListDropped)="drop($event)">
   @for (item of expanderItems; let outerIdx = $index; track outerIdx) {
     <mat-expansion-panel
+      cdkDrag
+      cdkDragLockAxis="y"
+      [cdkDragDisabled]="!item.dragConfig?.isDraggable || expanderItems.length === 1"
       [disabled]="item.isDisabled"
       [class.expander-panel--separated]="isSeparated">
       <mat-expansion-panel-header>
@@ -15,8 +22,16 @@
                 context: { $implicit: item }
               "></ng-container>
           </div>
-          @if (item.actions.length) {
+          @if (item.actions.length || item.dragConfig?.isDraggable) {
             <div class="action-buttons">
+              @if (item.dragConfig?.isDraggable && expanderItems.length > 1) {
+                <button mat-icon-button cdkDragHandle>
+                  <mat-icon
+                    [color]="item.dragConfig.color"
+                    [svgIcon]="item.dragConfig.icon.name"
+                    [curIconSize]="item.dragConfig.icon?.size"></mat-icon>
+                </button>
+              }
               @for (btn of item.actions; track btn.btnName) {
                 <button
                   mat-icon-button
