@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +20,6 @@ import { ThemeService } from './shared/services/themeService';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     CommonModule,
     AppRoutingModule,
     RouterModule,
@@ -31,7 +30,8 @@ import { ThemeService } from './shared/services/themeService';
     { provide: MAT_DATE_LOCALE, useValue: ru },
     { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
+    provideHttpClient(withInterceptorsFromDi())
   ]
 })
 export class AppModule {}
