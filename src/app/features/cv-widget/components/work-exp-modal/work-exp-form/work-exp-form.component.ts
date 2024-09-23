@@ -1,12 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   Input,
   OnDestroy,
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -15,7 +17,7 @@ import { TNullableType } from '../../../../../core/models/types';
 import { getToday, getTomorrow, geYearsBefore } from '../../../../../core/utils/date';
 import { IWorkExpModel } from '../../../model/work-exp.model';
 
-const MY_FORMATS = {
+const FORMATS = {
   parse: {
     dateInput: 'MM/yyyy'
   },
@@ -38,7 +40,7 @@ const MY_FORMATS = {
     }
   ],
   encapsulation: ViewEncapsulation.None,
-  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: FORMATS }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkExpFormComponent implements OnInit, OnDestroy {
@@ -46,6 +48,7 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
   @Input({ required: true }) controlKey = '';
 
   parentContainer = inject(ControlContainer);
+  destroyRef = inject(DestroyRef);
 
   fg: FormGroup<IWorkExpModel>;
   readonly minDate = geYearsBefore(80);
@@ -98,15 +101,38 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const stillWorking = !!this.initModel?.stillWorking;
     this.fg = new FormGroup<IWorkExpModel>({
       company: new FormControl(this.initModel?.company ?? '', [Validators.required]),
       jobPosition: new FormControl(this?.initModel?.jobPosition ?? '', [Validators.required]),
       location: new FormControl(this.initModel?.location ?? '', []),
       startDate: new FormControl(this?.initModel?.startDate ?? null, [Validators.required]),
-      endDate: new FormControl(this.initModel?.endDate ?? null, [Validators.required])
+      endDate: new FormControl(
+        {
+          value: stillWorking ? getToday() : this.initModel?.endDate ?? null,
+          disabled: stillWorking
+        },
+        [Validators.required]
+      ),
+      stillWorking: new FormControl(!!this.initModel?.stillWorking)
       // description: new FormControl('', []),
     } as any);
     this.parentFormGroup.addControl(this.controlKey, this.fg);
+    this.fg
+      .get('stillWorking')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef) /*, distinctUntilChanged()*/)
+      .subscribe(flag => {
+        const dateControl = this.fg.get('endDate');
+        if (flag) {
+          dateControl.setValue(getToday());
+          dateControl.markAsUntouched();
+          dateControl.disable();
+          dateControl.updateValueAndValidity();
+        } else {
+          dateControl.setValue(null);
+          dateControl.enable();
+        }
+      });
   }
 
   ngOnDestroy() {

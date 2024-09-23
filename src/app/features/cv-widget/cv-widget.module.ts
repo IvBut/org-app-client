@@ -2,13 +2,13 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOption } from '@angular/material/autocomplete';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
   MatDatepicker,
   MatDatepickerInput,
-  MatDatepickerToggle
+  MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker, MatEndDate, MatStartDate
 } from '@angular/material/datepicker';
 import { MatDivider } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,6 +37,9 @@ import { WorkExpListComponent } from './components/work-exp-list/work-exp-list.c
 import { WorkExpFormComponent } from './components/work-exp-modal/work-exp-form/work-exp-form.component';
 import { WorkExpModalComponent } from './components/work-exp-modal/work-exp-modal.component';
 import { CvComponent } from './cv.component';
+import { EducationListComponent } from './components/education-list/education-list.component';
+import { EducationFormComponent } from './components/education-modal/education-form/education-form.component';
+import { EducationModalComponent } from './components/education-modal/education-modal.component';
 
 const routes: Routes = [
   {
@@ -68,7 +71,10 @@ const routes: Routes = [
     UploadPhotoComponent,
     WorkExpListComponent,
     WorkExpModalComponent,
-    WorkExpFormComponent
+    WorkExpFormComponent,
+    EducationListComponent,
+    EducationFormComponent,
+    EducationModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -100,7 +106,12 @@ const routes: Routes = [
     MatDivider,
     MatIconButton,
     ExpanderModule,
-    CorePipesModule
+    CorePipesModule,
+    MatDateRangeInput,
+    MatEndDate,
+    MatStartDate,
+    MatDateRangePicker,
+    MatFabButton
   ]
 })
 export class CvWidgetModule {}

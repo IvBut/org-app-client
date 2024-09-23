@@ -2,25 +2,25 @@
   <div class="field-in-row-1">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Компания</mat-label>
-      <input matInput placeholder="Введите имя" formControlName="company" />
+      <input matInput placeholder="Введите название" formControlName="company" />
       <mat-error><cur-validation-errors controlKey="company"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
   <div class="field-in-row-2 mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Должность</mat-label>
-      <input matInput placeholder="Введите имя" formControlName="jobPosition" />
+      <input matInput placeholder="Название должности" formControlName="jobPosition" />
       <mat-error
         ><cur-validation-errors controlKey="jobPosition"></cur-validation-errors
       ></mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Локация</mat-label>
-      <input matInput placeholder="Введите имя" formControlName="location" />
+      <input matInput placeholder="Место расположения\Город" formControlName="location" />
       <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
-  <div class="field-in-row-2 mt-4">
+  <div class="field-in-row-3 mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Дата с</mat-label>
       <input
@@ -60,5 +60,6 @@
           [configForErrors]="dateErrors"></cur-validation-errors
       ></mat-error>
     </mat-form-field>
+    <mat-checkbox formControlName="stillWorking">Ещё работаю</mat-checkbox>
   </div>
 </form>

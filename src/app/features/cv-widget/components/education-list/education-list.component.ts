@@ -19,13 +19,13 @@ import {
   TExpanderItemDragConfig
 } from '../../../../shared/components/expander/models/expander.model';
 import { EIconName } from '../../../../shared/models/icon.model';
-import { IWorkExpModel, TWorkExpDataForm } from '../../model/work-exp.model';
-import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.component';
+import { IEducationModel, TEducationDataForm } from '../../model/education.model';
+import { EducationModalComponent } from '../education-modal/education-modal.component';
 
 @Component({
-  selector: 'cur-work-exp-list',
-  templateUrl: './work-exp-list.component.html',
-  styleUrl: './work-exp-list.component.scss',
+  selector: 'cur-education-list',
+  templateUrl: './education-list.component.html',
+  styleUrl: './education-list.component.scss',
   viewProviders: [
     {
       provide: ControlContainer,
@@ -34,7 +34,7 @@ import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.componen
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkExpListComponent implements OnInit, OnDestroy {
+export class EducationListComponent implements OnInit, OnDestroy {
   @Input({ required: true }) controlKey = '';
 
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
@@ -48,35 +48,36 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
     return this.parentContainer.control as FormGroup;
   }
 
-  get list(): FormArray<TWorkExpDataForm> {
-    return this.parentFormGroup.get(this.controlKey) as FormArray<TWorkExpDataForm>;
+  get list(): FormArray<TEducationDataForm> {
+    return this.parentFormGroup.get(this.controlKey) as FormArray<TEducationDataForm>;
   }
   ngOnInit() {
     this.parentFormGroup.addControl(this.controlKey, this._formBuilder.array([]));
   }
+
   ngOnDestroy() {
     this.parentFormGroup.removeControl(this.controlKey);
   }
 
   private openModal(
     mode: 'create' | 'edit',
-    initData: TNullableType<IWorkExpModel>,
+    initData: TNullableType<IEducationModel>,
     index?: TNullableType<number>
   ) {
     this.modalService
       .openModal(
-        WorkExpModalComponent,
+        EducationModalComponent,
         {
           size: EModalSize.LARGE,
           disableClose: true,
           modalData: initData,
-          caption: mode === 'create' ? 'Добавить опыт работы' : 'Редактировать опыт работы'
+          caption: mode === 'create' ? 'Добавить образование' : 'Редактировать образование'
         },
         {
           autoFocus: false
         }
       )
-      .closed.subscribe((data: TNullableType<FormGroup<IWorkExpModel>>) => {
+      .closed.subscribe((data: TNullableType<FormGroup<IEducationModel>>) => {
         if (data) {
           if (mode === 'create') {
             this.list.push(data);
@@ -99,7 +100,7 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
 
   handleEdit(idx: number) {
     const group = this.list.at(idx);
-    this.openModal('edit', group.value as unknown as IWorkExpModel, idx);
+    this.openModal('edit', group.value as unknown as IEducationModel, idx);
   }
 
   handleAction({ index, btnName }: TExpanderItemActionOutput) {

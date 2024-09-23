@@ -2,7 +2,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
 
 export function updateValueAndValidity<T extends AbstractControl>(
   control: T,
-  markAsTouched: boolean = true
+  markAsTouched: boolean = true,
+  updateValue: boolean = false
 ): void {
   try {
     if (control instanceof FormGroup) {
@@ -20,7 +21,7 @@ export function updateValueAndValidity<T extends AbstractControl>(
       });
     } else if (control instanceof FormControl) {
       markAsTouched && control.markAsTouched();
-      control.updateValueAndValidity();
+      updateValue && control.updateValueAndValidity();
     } else {
       throw new Error('Error: unexpected control value');
     }

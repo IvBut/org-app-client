@@ -8,6 +8,7 @@ export interface IWorkExpModel {
   startDate: FormControl<TNull<Date>>;
   endDate: FormControl<TNull<Date>>;
   description: FormControl<string>;
+  stillWorking: FormControl<boolean>;
 }
 
 export type TWorkExpDataForm = FormGroup<IWorkExpModel>;

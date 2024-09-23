@@ -1,0 +1,68 @@
+<form [formGroupName]="controlKey">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Учебное заведение</mat-label>
+      <input matInput placeholder="Введите название" formControlName="institution" />
+      <mat-error
+        ><cur-validation-errors controlKey="institution"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-1 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Степень</mat-label>
+      <input matInput placeholder="Введите степень\специализацию" formControlName="degree" />
+      <mat-error><cur-validation-errors controlKey="degree"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>С</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromDatePicker"
+        [matDatepickerFilter]="startYearFilter"
+        formControlName="startYear"
+        placeholder="Начало обучения" />
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker
+        panelClass="hide-date-picker-panel"
+        startView="multi-year"
+        (yearSelected)="closeDatePicker($event, fromDatePicker, 'startYear')"
+        #fromDatePicker></mat-datepicker>
+      <mat-error
+        ><cur-validation-errors
+          controlKey="startYear"
+          [configForErrors]="dateErrors"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>По</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toDatePicker"
+        [matDatepickerFilter]="endYearFilter"
+        formControlName="endYear"
+        placeholder="Окончание обучения" />
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker
+        panelClass="hide-date-picker-panel"
+        startView="multi-year"
+        (yearSelected)="closeDatePicker($event, toDatePicker, 'endYear')"
+        #toDatePicker></mat-datepicker>
+      <mat-error
+        ><cur-validation-errors
+          controlKey="endYear"
+          [configForErrors]="dateErrors"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="field-in-row-1 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Локация</mat-label>
+      <input matInput placeholder="Место расположения\Город" formControlName="location" />
+      <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+</form>
