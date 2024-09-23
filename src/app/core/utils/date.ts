@@ -1,11 +1,13 @@
 import * as dateFns from 'date-fns';
 import { ru } from 'date-fns/locale/ru';
 import { EDateFormats } from '../models/date.model';
+import { TNullableType } from '../models/types';
 
+export type TDateFormatterInpDate = TNullableType<Date | number | string>;
 export const dateFormatter = (
-  date: Date | number | string | undefined | null,
+  date: TDateFormatterInpDate,
   outputFormat: string = EDateFormats.DATE_WITH_DOTS,
-  emptyValue: string = '',
+  emptyValue: TNullableType<string> = '',
   options: dateFns.FormatOptions = { locale: ru }
 ) => {
   if (!date && date !== 0) return emptyValue;
@@ -13,6 +15,10 @@ export const dateFormatter = (
 };
 export const getToday = () => {
   return dateFns.startOfToday();
+};
+
+export const getTomorrow = () => {
+  return dateFns.addDays(dateFns.startOfToday(), 1);
 };
 
 export const getTodayRange = () => {
@@ -32,4 +38,14 @@ export const getLastMonthRange = () => {
 export const getLastYearRange = () => {
   const today = getToday();
   return [dateFns.subYears(today, 1), today];
+};
+
+export const geYearsBefore = (count: number) => {
+  const today = getToday();
+  return dateFns.subYears(today, count);
+};
+
+export const geYearsAfter = (count: number) => {
+  const today = getToday();
+  return dateFns.addYears(today, count);
 };

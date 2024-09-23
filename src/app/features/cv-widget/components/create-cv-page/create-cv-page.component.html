@@ -1,0 +1,58 @@
+<h1>Создание нового резюме</h1>
+<form [formGroup]="cvWizardData">
+  <mat-stepper linear="true">
+    <mat-step [stepControl]="cvWizardData.controls.personalData">
+      <ng-template matStepLabel>Персональные данные</ng-template>
+      <cur-personal-data-form
+        class="form-wrapper"
+        [controlKey]="'personalData'"></cur-personal-data-form>
+      <div class="navigate-buttons-wrapper">
+        <button
+          class="next"
+          mat-flat-button
+          color="primary"
+          type="button"
+          matStepperNext
+          (click)="next('personalData')">
+          Далее
+        </button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="cvWizardData.controls.workExperienceList">
+      <ng-template matStepLabel>Опыт</ng-template>
+      <cur-work-exp-list class="form-wrapper" controlKey="workExperienceList"></cur-work-exp-list>
+      <div class="navigate-buttons-wrapper">
+        <button mat-stroked-button color="primary" type="button" matStepperPrevious>
+          На шаг назад
+        </button>
+        <button
+          class="next"
+          mat-flat-button
+          color="primary"
+          type="button"
+          matStepperNext
+          (click)="next('workExperienceList')">
+          Далее
+        </button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="cvWizardData.controls.educationList">
+      <ng-template matStepLabel>Образование</ng-template>
+      <cur-education-list class="form-wrapper" controlKey="educationList"></cur-education-list>
+      <div class="navigate-buttons-wrapper">
+        <button mat-stroked-button color="primary" type="button" matStepperPrevious>
+          На шаг назад
+        </button>
+        <button
+          class="next"
+          mat-flat-button
+          color="primary"
+          type="button"
+          matStepperNext
+          (click)="next('educationList')">
+          Далее
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>

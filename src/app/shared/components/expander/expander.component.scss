@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.expander-panel--separated {
+  margin-bottom: 40px;
+  &:last-child {
+    margin-bottom: auto;
+  }
+}
+
+.header-description {
+  flex: 1 1 auto;
+
+  &-content {
+    flex: 1 1 auto;
+  }
+
+  .action-buttons {
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+  }
+}

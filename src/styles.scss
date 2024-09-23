@@ -1,5 +1,6 @@
 @use 'styles/reset';
 @use 'styles/components/components';
+@import '@angular/cdk/overlay-prebuilt.css';
 
 html,
 body {

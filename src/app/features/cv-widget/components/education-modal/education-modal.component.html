@@ -1,0 +1,7 @@
+<form [formGroup]="modalDataGroup" (ngSubmit)="handleSave()">
+  <cur-education-form [initModel]="modalData.modalData" controlKey="educForm"></cur-education-form>
+</form>
+<ng-container *curModalActions="modalData.containerInstance">
+  <button mat-stroked-button color="primary" type="button" (click)="handleCancel()">Отмена</button>
+  <button mat-flat-button color="primary" type="submit" (click)="handleSave()">Сохранить</button>
+</ng-container>

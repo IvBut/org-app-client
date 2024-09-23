@@ -21,6 +21,11 @@ export class MainSidebarComponent {
       text: 'Курс валют'
     },
     {
+      icon: EIconName.CV,
+      routerLink: '/cv',
+      text: 'Резюме'
+    },
+    {
       icon: EIconName.SETTINGS,
       routerLink: '/settings',
       text: 'Настройки'

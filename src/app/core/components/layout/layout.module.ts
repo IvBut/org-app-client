@@ -10,6 +10,7 @@ import { SidenavLinkModule } from '../../../shared/components/sidenav-link/siden
 import { IconSizeModule } from '../../../shared/directives/icon-size/icon-size/icon-size.module';
 import { SidenavContentAreaDirective } from './directive/sidenav-content-area.directive';
 import { SidebarService } from './services/sidebarService';
+import { CvSidebarComponent } from './sidebar/cv-sidebar.component';
 import { ExchangeSidebarComponent } from './sidebar/exchange-sidebar.component';
 import { MainSidebarComponent } from './sidebar/main-sidebar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -21,7 +22,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     SidebarComponent,
     SidenavContentAreaDirective,
     MainSidebarComponent,
-    ExchangeSidebarComponent
+    ExchangeSidebarComponent,
+    CvSidebarComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     SidebarComponent,
     MainSidebarComponent,
     SidenavContentAreaDirective,
-    ExchangeSidebarComponent
+    ExchangeSidebarComponent,
+    CvSidebarComponent
   ],
   providers: [SidebarService]
 })

@@ -11,7 +11,13 @@ export enum EIconName {
   PALETTE = 'palette',
   FILTER_ALT_OFF = 'filter_alt_off',
   REFRESH = 'refresh',
-  CLOSE = 'close'
+  CLOSE = 'close',
+  CV = 'cv',
+  ADD = 'add',
+  PHOTO_CAMERA = 'photo_camera',
+  EDIT = 'edit',
+  DELETE = 'delete',
+  DRAG = 'drag'
 }
 
 export enum EIconSize {
@@ -29,6 +35,8 @@ interface IIconConfig {
   name: EIconName;
   fileName: string;
 }
+
+export type TIconSize = EIconSize | keyof typeof EIconSize;
 
 const getPath = (fileName: string) => `/assets/icons/${fileName}.svg`;
 
@@ -84,5 +92,29 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('close'),
     name: EIconName.CLOSE
+  },
+  {
+    fileName: getPath('cv'),
+    name: EIconName.CV
+  },
+  {
+    fileName: getPath('add'),
+    name: EIconName.ADD
+  },
+  {
+    fileName: getPath('photo_camera'),
+    name: EIconName.PHOTO_CAMERA
+  },
+  {
+    fileName: getPath('edit'),
+    name: EIconName.EDIT
+  },
+  {
+    fileName: getPath('delete'),
+    name: EIconName.DELETE
+  },
+  {
+    fileName: getPath('drag_pan'),
+    name: EIconName.DRAG
   }
 ];

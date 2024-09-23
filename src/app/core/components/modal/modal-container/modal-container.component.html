@@ -1,0 +1,18 @@
+<cur-modal-header (closeModal)="handleClose()">
+  <span curModalCaption class="modal__heading-caption">
+    {{ data.caption }}
+  </span>
+  @if (data.description) {
+    <span curModalDescription>
+      {{ data.description }}
+    </span>
+  }
+</cur-modal-header>
+<div class="modal-content">
+  <ng-template [cdkPortalOutlet]="portal"></ng-template>
+</div>
+@if (!!actionsTemplate) {
+  <cur-modal-actions>
+    <ng-container [ngTemplateOutlet]="actionsTemplate"></ng-container>
+  </cur-modal-actions>
+}

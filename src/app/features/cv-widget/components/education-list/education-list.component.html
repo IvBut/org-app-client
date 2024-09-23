@@ -1,0 +1,32 @@
+<div>
+  <mat-divider></mat-divider>
+  <div class="add-button">
+    <button mat-button color="primary" (click)="handleAdd()">
+      Добавить образование
+      <mat-icon [svgIcon]="EIconName.ADD" curIconSize="Medium">favorite</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+</div>
+<div class="mt-3">
+  <cur-expander [multi]="true" (dropEnd)="drop($event)">
+    @for (exp of list.controls; track $index) {
+      <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
+        <ng-template curExpanderTitle>{{ exp.controls.institution.value }}</ng-template>
+        <ng-template curExpanderTitleDescription>
+          <div class="ml-5 range">
+            <mat-icon>date_range</mat-icon>
+            <span class="ml-1">
+              {{ exp.controls.startYear.value | dateFormat: 'MM/yyyy' }}
+              <span>&mdash;</span>
+              {{ exp.controls.endYear.value | dateFormat: 'MM/yyyy' }}
+            </span>
+          </div>
+        </ng-template>
+        <ng-template curExpanderContent>
+          <h3>{{ exp.controls.degree.value }}</h3>
+        </ng-template>
+      </cur-expander-item>
+    }
+  </cur-expander>
+</div>

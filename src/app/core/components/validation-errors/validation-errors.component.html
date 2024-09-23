@@ -1,0 +1,8 @@
+@if (errorsList.length) {
+  <ng-container>
+    @for (item of errorsList; track item) {
+      <span>{{ item }}</span>
+      <br />
+    }
+  </ng-container>
+}
