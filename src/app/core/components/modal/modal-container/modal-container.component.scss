@@ -6,7 +6,7 @@
   height: 100%;
   min-height: inherit;
   max-height: inherit;
-  background: #fff;
+  background: varialbes.$modal-bg-color;
 }
 
 .modal__heading-caption {
@@ -18,5 +18,5 @@
 .modal-content {
   overflow: hidden;
   flex-grow: 1;
-  padding: varialbes.$unitSize*2 varialbes.$unitSize*4;
+  padding: varialbes.$unitSize * 2 varialbes.$unitSize * 4;
 }
