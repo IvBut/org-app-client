@@ -15,6 +15,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import * as dateFns from 'date-fns';
 import { TNullableType } from '../../../../../core/models/types';
 import { getToday, getTomorrow, geYearsBefore } from '../../../../../core/utils/date';
+import { DEFAULT_EDITOR_TOOLBAR } from '../../../model/editor.configs';
 import { IWorkExpModel } from '../../../model/work-exp.model';
 
 const FORMATS = {
@@ -53,6 +54,10 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
   fg: FormGroup<IWorkExpModel>;
   readonly minDate = geYearsBefore(80);
   readonly maxDate = getTomorrow();
+
+  readonly descriptionConfig: any = {
+    toolbar: DEFAULT_EDITOR_TOOLBAR
+  };
 
   readonly dateErrors = {
     matDatepickerParse: () => 'Неправильный формат даты',
@@ -109,13 +114,13 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
       startDate: new FormControl(this?.initModel?.startDate ?? null, [Validators.required]),
       endDate: new FormControl(
         {
-          value: stillWorking ? getToday() : this.initModel?.endDate ?? null,
+          value: stillWorking ? getToday() : (this.initModel?.endDate ?? null),
           disabled: stillWorking
         },
         [Validators.required]
       ),
-      stillWorking: new FormControl(!!this.initModel?.stillWorking)
-      // description: new FormControl('', []),
+      stillWorking: new FormControl(!!this.initModel?.stillWorking),
+      description: new FormControl(this.initModel?.description ?? '', [])
     } as any);
     this.parentFormGroup.addControl(this.controlKey, this.fg);
     this.fg

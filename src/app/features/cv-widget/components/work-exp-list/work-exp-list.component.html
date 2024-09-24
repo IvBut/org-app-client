@@ -24,7 +24,18 @@
           </div>
         </ng-template>
         <ng-template curExpanderContent>
-          <h3>{{ exp.controls.jobPosition.value }}</h3>
+          <div>
+            <p class="subtitle">Должность</p>
+            <pre>{{ exp.controls.jobPosition.value }}</pre>
+          </div>
+          @if (exp.controls?.description?.value) {
+            <div class="mt-3">
+              <p class="subtitle">Описание</p>
+              <quill-view-html
+                [content]="exp.controls?.description?.value"
+                theme="snow"></quill-view-html>
+            </div>
+          }
         </ng-template>
       </cur-expander-item>
     }

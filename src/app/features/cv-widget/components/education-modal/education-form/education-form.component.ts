@@ -13,6 +13,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import * as dateFns from 'date-fns';
 import { TNullableType } from '../../../../../core/models/types';
 import { geYearsAfter, geYearsBefore } from '../../../../../core/utils/date';
+import { DEFAULT_EDITOR_TOOLBAR } from '../../../model/editor.configs';
 import { IEducationModel } from '../../../model/education.model';
 
 const FORMATS = {
@@ -44,6 +45,11 @@ const FORMATS = {
     .hide-date-picker-panel .mat-calendar-arrow {
       display: none;
     }
+
+    .editor {
+      width: 100%;
+      height: 250px;
+    }
   `,
   providers: [{ provide: MAT_DATE_FORMATS, useValue: FORMATS }],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -57,6 +63,9 @@ export class EducationFormComponent implements OnInit, OnDestroy {
   fg: FormGroup<IEducationModel>;
   readonly minYear = geYearsBefore(80);
   readonly maxYear = geYearsAfter(5);
+  readonly descriptionConfig: any = {
+    toolbar: DEFAULT_EDITOR_TOOLBAR
+  };
 
   readonly dateErrors = {
     matDatepickerParse: () => 'Некорректная дата',
@@ -92,11 +101,11 @@ export class EducationFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fg = new FormGroup<IEducationModel>({
       institution: new FormControl(this.initModel?.institution ?? '', [Validators.required]),
-      degree: new FormControl(this.initModel?.institution ?? '', [Validators.required]),
-      location: new FormControl(this.initModel?.institution ?? ''),
+      degree: new FormControl(this.initModel?.degree ?? '', [Validators.required]),
+      location: new FormControl(this.initModel?.location ?? ''),
       startYear: new FormControl(this?.initModel?.startYear ?? null, [Validators.required]),
       endYear: new FormControl(this.initModel?.endYear ?? null, [Validators.required]),
-      description: new FormControl(this.initModel?.institution ?? '')
+      description: new FormControl(this.initModel?.description ?? '')
     });
     this.parentFormGroup.addControl(this.controlKey, this.fg);
   }

@@ -27,15 +27,13 @@
             "outputPath": "dist/currency-rate",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input":  "./node_modules/@angular/material/prebuilt-themes",
+                "input": "./node_modules/@angular/material/prebuilt-themes",
                 "output": "./custom-assets"
               },
               "src/favicon.ico",
@@ -62,13 +60,13 @@
                 "inject": false,
                 "bundleName": "deeppurple-amber"
               },
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-               "src",
-               "src/styles"
-              ]
+              "includePaths": ["src", "src/styles"]
             },
             "scripts": []
           },
@@ -120,40 +118,24 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/apexcharts/dist/apexcharts.min.js"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["@angular/material/prebuilt-themes/pink-bluegrey.css", "src/styles.scss"],
+            "scripts": ["node_modules/apexcharts/dist/apexcharts.min.js"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

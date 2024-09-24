@@ -10,8 +10,8 @@
   </div>
   <div class="field-in-row-1 mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label>Степень</mat-label>
-      <input matInput placeholder="Введите степень\специализацию" formControlName="degree" />
+      <mat-label>Степень/специальность</mat-label>
+      <input matInput placeholder="Введите степень/специальность" formControlName="degree" />
       <mat-error><cur-validation-errors controlKey="degree"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
@@ -57,12 +57,21 @@
       ></mat-error>
     </mat-form-field>
   </div>
-
   <div class="field-in-row-1 mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Локация</mat-label>
       <input matInput placeholder="Место расположения\Город" formControlName="location" />
       <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
     </mat-form-field>
+  </div>
+  <div class="mt-4">
+    <pre>Опишите изучаемые дисциплины, достижения и т.д.</pre>
+  </div>
+  <div class="field-in-row-1">
+    <quill-editor
+      class="editor"
+      [modules]="descriptionConfig"
+      placeholder="Введите описание..."
+      formControlName="description"></quill-editor>
   </div>
 </form>

@@ -1,7 +1,27 @@
-.hide-date-picker-panel  .mat-calendar-period-button{
+.hide-date-picker-panel .mat-calendar-period-button {
   pointer-events: none;
 }
 
 .hide-date-picker-panel .mat-calendar-arrow {
   display: none;
+}
+
+.dates {
+  mat-form-field {
+    width: 37%;
+    &:first-child {
+      padding-right: 8px;
+    }
+    &:nth-child(2) {
+      padding-left: 8px;
+    }
+  }
+  mat-checkbox {
+    padding-left: 8px;
+  }
+}
+
+.editor {
+  width: 100%;
+  height: 250px;
 }
