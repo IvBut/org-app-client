@@ -9,6 +9,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ru } from 'date-fns/locale';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { QuillModule } from 'ngx-quill';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './core/components/layout/layout.module';
@@ -23,7 +24,8 @@ import { ThemeService } from './shared/services/themeService';
     CommonModule,
     AppRoutingModule,
     RouterModule,
-    LayoutModule
+    LayoutModule,
+    QuillModule.forRoot()
   ],
   providers: [
     ThemeService,

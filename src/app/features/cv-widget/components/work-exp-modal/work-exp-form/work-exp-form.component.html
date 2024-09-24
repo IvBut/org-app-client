@@ -20,7 +20,7 @@
       <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
-  <div class="field-in-row-3 mt-4">
+  <div class="dates mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Дата с</mat-label>
       <input
@@ -61,5 +61,15 @@
       ></mat-error>
     </mat-form-field>
     <mat-checkbox formControlName="stillWorking">Ещё работаю</mat-checkbox>
+  </div>
+  <div class="mt-4">
+    <pre>Опишите ваши обязанности, достижения и т.д.</pre>
+  </div>
+  <div class="field-in-row-1">
+    <quill-editor
+      class="editor"
+      [modules]="descriptionConfig"
+      placeholder="Введите описание..."
+      formControlName="description"></quill-editor>
   </div>
 </form>
