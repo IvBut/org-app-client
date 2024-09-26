@@ -1,0 +1,123 @@
+:host {
+  display: block;
+  width: inherit;
+  height: inherit;
+}
+
+$maxElements: 10;
+$transition: all 0.5s ease;
+
+$bg-row-map: (
+  0: rgba(252, 79, 82, 0.1),
+  1: #ffeaee,
+  2: #fef5d7,
+  3: #eafcf1,
+  4: #e8daff,
+  5: #e5f8ff,
+  6: #f1f2ff,
+  7: #edf5ff,
+  8: #feebe3,
+  9: #fff2cc
+);
+
+$bg-cell-hover-map: (
+  0: rgba(252, 79, 82, 0.5),
+  1: #ffd0d5,
+  2: #fee189,
+  3: #b6f1c9,
+  4: #d4bbff,
+  5: #cef,
+  6: #dbdeff,
+  7: #6fa3ff,
+  8: #fdd2c0,
+  9: #fddb8c
+);
+
+$bg-selected-map: (
+  0: rgb(252, 79, 82),
+  1: #fe7d8b,
+  2: #ffc400,
+  3: #32c665,
+  4: #a56eff,
+  5: #3dbfff,
+  6: #9ba1fb,
+  7: #0062ff,
+  8: #f68559,
+  9: #ec930c
+);
+
+.label {
+  font-weight: 550;
+}
+
+.pick-row {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  height: 48px;
+  border-radius: 5px;
+}
+
+.pick-element {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  flex: 1 1 auto;
+  background: transparent;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: 14px;
+    margin-top: -7px;
+    background: darkgrey;
+  }
+
+  &:first-child {
+    &:after {
+      content: none;
+    }
+  }
+
+  input {
+    width: 0;
+    height: 0;
+  }
+}
+
+.remove-pseudo {
+  transition: $transition;
+  &:after {
+    content: none;
+  }
+}
+
+.selected-element {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: $transition;
+}
+
+@for $i from 0 through $maxElements {
+  .pick-row-color-#{$i} {
+    background-color: map-get($bg-row-map, $i);
+  }
+}
+
+@for $i from 0 through $maxElements {
+  .pick-element-color-#{$i}:hover {
+    background-color: map-get($bg-cell-hover-map, $i);
+  }
+}
+
+@for $i from 0 through $maxElements {
+  .selected-element-color-#{$i} {
+    background-color: map-get($bg-selected-map, $i);
+  }
+}
