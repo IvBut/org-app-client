@@ -1,0 +1,18 @@
+<form [formGroup]="form">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Название секции</mat-label>
+      <input matInput placeholder="Введите название" formControlName="sectionName" />
+      <mat-error
+        ><cur-validation-errors controlKey="sectionName"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-1 mt-3">
+    <mat-slide-toggle formControlName="hideSection">Скрыть раздел</mat-slide-toggle>
+  </div>
+</form>
+<ng-container *curModalActions="modalData.containerInstance">
+  <button mat-stroked-button color="primary" type="button" (click)="handleCancel()">Отмена</button>
+  <button mat-flat-button color="primary" type="submit" (click)="handleSave()">Сохранить</button>
+</ng-container>

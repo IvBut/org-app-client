@@ -125,7 +125,7 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
     this.parentFormGroup.addControl(this.controlKey, this.fg);
     this.fg
       .get('stillWorking')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef) /*, distinctUntilChanged()*/)
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(flag => {
         const dateControl = this.fg.get('endDate');
         if (flag) {

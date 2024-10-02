@@ -1,0 +1,8 @@
+<mat-divider></mat-divider>
+<div class="add-button">
+  <button mat-button color="primary" (click)="handleAdd()">
+    <ng-content></ng-content>
+    <mat-icon [svgIcon]="EIconName.ADD" [curIconSize]="size"></mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>

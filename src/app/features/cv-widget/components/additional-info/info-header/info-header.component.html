@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <div class="title-and-icon">
+    <mat-icon color="primary" [curIconSize]="'XXXLarge'" [svgIcon]="ICON_MAP[sectionId]"></mat-icon>
+    <h2 class="pl-3">{{ settings.controls.sectionName.value }}</h2>
+  </div>
+  <div class="action-buttons">
+    <mat-icon
+      cdkDragHandle
+      class="mr-2 move-icon"
+      [color]="'accent'"
+      [svgIcon]="EIconName.DRAG"
+      [curIconSize]="'XXXLarge'"></mat-icon>
+    <mat-icon
+      class="settings"
+      [color]="'accent'"
+      [svgIcon]="EIconName.SETTINGS"
+      [curIconSize]="'XXXLarge'"
+      (click)="changeSettings()"></mat-icon>
+  </div>
+</div>

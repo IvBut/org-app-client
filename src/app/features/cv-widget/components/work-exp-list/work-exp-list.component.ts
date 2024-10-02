@@ -53,6 +53,7 @@ export class WorkExpListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.parentFormGroup.addControl(this.controlKey, this._formBuilder.array([]));
+    this.cdr.markForCheck();
   }
   ngOnDestroy() {
     this.parentFormGroup.removeControl(this.controlKey);

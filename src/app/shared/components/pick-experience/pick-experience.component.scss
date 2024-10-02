@@ -46,10 +46,6 @@ $bg-selected-map: (
   9: #ec930c
 );
 
-.label {
-  font-weight: 550;
-}
-
 .pick-row {
   width: 100%;
   position: relative;
@@ -57,6 +53,10 @@ $bg-selected-map: (
   display: flex;
   height: 48px;
   border-radius: 5px;
+}
+
+.pick-row-not-selected {
+  border: 0.5px dashed darkgrey;
 }
 
 .pick-element {

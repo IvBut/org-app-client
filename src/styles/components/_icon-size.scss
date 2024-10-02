@@ -9,13 +9,17 @@ $size-map: (
   'large': variables.$unitSize * 3.5,
   'xlarge': variables.$unitSize * 4,
   'xxlarge': variables.$unitSize * 4.5,
-  'xxxlarge': variables.$unitSize * 5,
+  'xxxlarge': variables.$unitSize * 5
 );
 
 mat-icon.icon-size {
   @each $key, $val in $size-map {
     &--#{$key} {
-      @include mixins.icon-size($val)
+      @include mixins.icon-size($val);
+      svg {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

@@ -2,47 +2,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   EventEmitter,
   inject,
   Input,
   OnChanges,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  TemplateRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TNull, TNullableType } from '../../../core/models/types';
-
-export type TPickExpOption = {
-  label: string;
-  value: string;
-};
-
-const DEFAULT_OPTIONS: TPickExpOption[] = [
-  {
-    label: 'Novice',
-    value: 'Novice'
-  },
-  {
-    label: 'Beginner',
-    value: 'Beginner'
-  },
-  {
-    label: 'Skillful',
-    value: 'Skillful'
-  },
-  {
-    label: 'Experienced',
-    value: 'Experienced'
-  },
-  {
-    label: 'Expert',
-    value: 'Expert'
-  },
-  {
-    label: 'SuperExpert',
-    value: 'SuperExpert'
-  }
-];
+import { TPickExpOption } from '../../models/pick-experience.model';
 
 @Component({
   selector: 'cur-pick-experience',
@@ -59,12 +30,12 @@ const DEFAULT_OPTIONS: TPickExpOption[] = [
 })
 export class PickExperienceComponent implements OnChanges, ControlValueAccessor {
   @Input()
-  pickExpOptions?: TPickExpOption[] = DEFAULT_OPTIONS;
+  pickExpOptions?: TPickExpOption[] = [];
   @Input()
   pickedValue?: TNullableType<TPickExpOption>;
   @Output()
   pickedValueChange = new EventEmitter<TNullableType<TPickExpOption>>();
-
+  @ContentChild('pickExpLabel') label: TemplateRef<any>;
   _pickedValue?: TNullableType<TPickExpOption>;
   _index: TNull<number> = null;
 
@@ -88,6 +59,12 @@ export class PickExperienceComponent implements OnChanges, ControlValueAccessor 
 
   writeValue(value: TPickExpOption): void {
     this._pickedValue = value;
+    const idx = this.pickExpOptions.findIndex(el => el.value === value?.value);
+    if (idx > -1) {
+      this._index = idx;
+    } else {
+      this._index = null;
+    }
     this.cdr.markForCheck();
   }
   registerOnChange(onChange: any) {
