@@ -1,13 +1,4 @@
-<div>
-  <mat-divider></mat-divider>
-  <div class="add-button">
-    <button mat-button color="primary" (click)="handleAdd()">
-      Добавить опыт работы
-      <mat-icon [svgIcon]="EIconName.ADD" curIconSize="Medium">favorite</mat-icon>
-    </button>
-  </div>
-  <mat-divider></mat-divider>
-</div>
+<cur-add-list-btn (clickAdd)="handleAdd()">Добавить опыт работы</cur-add-list-btn>
 <div class="mt-4">
   <cur-expander [multi]="true" (dropEnd)="drop($event)">
     @for (exp of list.controls; track $index) {

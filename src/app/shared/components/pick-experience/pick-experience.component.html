@@ -1,0 +1,31 @@
+<ng-container
+  [ngTemplateOutlet]="label"
+  [ngTemplateOutletContext]="{ $implicit: _pickedValue }"></ng-container>
+@if (pickExpOptions.length) {
+  <div
+    [ngClass]="[
+      'mt-1',
+      'pick-row',
+      'pick-row-color-' + _index,
+      isNotSelected ? 'pick-row-not-selected' : ''
+    ]">
+    @for (item of pickExpOptions; track $index) {
+      <label
+        [ngClass]="[
+          'pick-element',
+          'pick-element-color-' + _index,
+          _index !== null && (_index === $index || _index + 1 === $index) ? 'remove-pseudo' : ''
+        ]"
+        [style.width.%]="selectedWidth">
+        <input
+          type="checkbox"
+          [checked]="item.value === _pickedValue?.value"
+          (change)="handleChange($index)" />
+      </label>
+    }
+    <div
+      [className]="'selected-element selected-element-color-' + _index"
+      [style.width.%]="isNotSelected ? 0 : selectedWidth"
+      [style.transform]="offset"></div>
+  </div>
+}

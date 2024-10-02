@@ -11,7 +11,11 @@ type TModalData = FormGroup<IWorkExpModel>;
 @Component({
   selector: 'cur-work-exp-modal',
   templateUrl: './work-exp-modal.component.html',
-  styleUrl: './work-exp-modal.component.scss',
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkExpModalComponent {

@@ -1,10 +1,12 @@
+import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatChip, MatChipSet } from '@angular/material/chips';
 import {
   MatDateRangeInput,
   MatDateRangePicker,
@@ -19,7 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSelect } from '@angular/material/select';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import {
   MatStep,
   MatStepLabel,
@@ -33,14 +37,23 @@ import { QuillEditorComponent, QuillViewHTMLComponent } from 'ngx-quill';
 import { ModalModule } from '../../core/components/modal/modal.module';
 import { ValidationErrorsModule } from '../../core/components/validation-errors/validation-errors.module';
 import { CorePipesModule } from '../../core/pipes/core-pipes.module';
+import { AddListBtnModule } from '../../shared/components/add-list-btn/add-list-btn.module';
 import { ExpanderModule } from '../../shared/components/expander/expander.module';
+import { PickExperienceModule } from '../../shared/components/pick-experience/pick-experience.module';
 import { IconSizeModule } from '../../shared/directives/icon-size/icon-size/icon-size.module';
+import { AdditionalInfoComponent } from './components/additional-info/additional-info.component';
+import { InfoHeaderComponent } from './components/additional-info/info-header/info-header.component';
 import { CreateCvPageComponent } from './components/create-cv-page/create-cv-page.component';
 import { EducationListComponent } from './components/education-list/education-list.component';
 import { EducationFormComponent } from './components/education-modal/education-form/education-form.component';
 import { EducationModalComponent } from './components/education-modal/education-modal.component';
 import { PersonalDataFormComponent } from './components/personal-data-form/personal-data-form.component';
 import { UploadPhotoComponent } from './components/personal-data-form/upload-photo/upload-photo.component';
+import { ProfileDataFormComponent } from './components/profile-data-form/profile-data-form.component';
+import { SectionSettingsModalComponent } from './components/section-settings-modal/section-settings-modal.component';
+import { SkillsListComponent } from './components/skills-list/skills-list.component';
+import { SkillsFormComponent } from './components/skills-modal/skills-form/skills-form.component';
+import { SkillsModalComponent } from './components/skills-modal/skills-modal.component';
 import { WorkExpListComponent } from './components/work-exp-list/work-exp-list.component';
 import { WorkExpFormComponent } from './components/work-exp-modal/work-exp-form/work-exp-form.component';
 import { WorkExpModalComponent } from './components/work-exp-modal/work-exp-modal.component';
@@ -79,7 +92,14 @@ const routes: Routes = [
     WorkExpFormComponent,
     EducationListComponent,
     EducationFormComponent,
-    EducationModalComponent
+    EducationModalComponent,
+    AdditionalInfoComponent,
+    InfoHeaderComponent,
+    SectionSettingsModalComponent,
+    SkillsListComponent,
+    SkillsModalComponent,
+    SkillsFormComponent,
+    ProfileDataFormComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -118,7 +138,18 @@ const routes: Routes = [
     MatDateRangePicker,
     MatFabButton,
     QuillEditorComponent,
-    QuillViewHTMLComponent
+    QuillViewHTMLComponent,
+    MatCardHeader,
+    CdkDragHandle,
+    MatSlideToggle,
+    AddListBtnModule,
+    PickExperienceModule,
+    MatRadioGroup,
+    MatRadioButton,
+    MatChipSet,
+    CdkDropList,
+    MatChip,
+    CdkDrag
   ]
 })
 export class CvWidgetModule {}

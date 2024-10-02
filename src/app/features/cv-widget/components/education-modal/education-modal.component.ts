@@ -11,7 +11,11 @@ type TModalData = FormGroup<IEducationModel>;
 @Component({
   selector: 'cur-education-modal',
   templateUrl: './education-modal.component.html',
-  styleUrl: './education-modal.component.scss',
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EducationModalComponent {

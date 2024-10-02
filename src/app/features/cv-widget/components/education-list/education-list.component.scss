@@ -1,11 +1,8 @@
-.range {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+:host {
+  display: block;
 }
 
-.add-button {
-  width: 100%;
+.range {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -13,14 +13,21 @@
           color="primary"
           type="button"
           matStepperNext
-          (click)="next('personalData')">
+          (click)="next(['personalData'])">
           Далее
         </button>
       </div>
     </mat-step>
-    <mat-step [stepControl]="cvWizardData.controls.workExperienceList">
-      <ng-template matStepLabel>Опыт</ng-template>
-      <cur-work-exp-list class="form-wrapper" controlKey="workExperienceList"></cur-work-exp-list>
+    <mat-step [stepControl]="cvWizardData.controls.sectionSettings">
+      <ng-template matStepLabel>Доп. Информация</ng-template>
+      <cur-additional-info
+        class="form-wrapper"
+        [settingsControlKey]="'sectionSettings'"
+        [educationControlKey]="'educationList'"
+        [workExpControlKey]="'workExperienceList'"
+        [skillsControlKey]="'skills'"
+        [profileControlKey]="'profile'">
+      </cur-additional-info>
       <div class="navigate-buttons-wrapper">
         <button mat-stroked-button color="primary" type="button" matStepperPrevious>
           На шаг назад
@@ -31,25 +38,16 @@
           color="primary"
           type="button"
           matStepperNext
-          (click)="next('workExperienceList')">
-          Далее
-        </button>
-      </div>
-    </mat-step>
-    <mat-step [stepControl]="cvWizardData.controls.educationList">
-      <ng-template matStepLabel>Образование</ng-template>
-      <cur-education-list class="form-wrapper" controlKey="educationList"></cur-education-list>
-      <div class="navigate-buttons-wrapper">
-        <button mat-stroked-button color="primary" type="button" matStepperPrevious>
-          На шаг назад
-        </button>
-        <button
-          class="next"
-          mat-flat-button
-          color="primary"
-          type="button"
-          matStepperNext
-          (click)="next('educationList')">
+          (click)="
+            next([
+              'sectionSettings',
+              'workExperienceList',
+              'educationList',
+              'sectionSettings',
+              'skills',
+              'profile'
+            ])
+          ">
           Далее
         </button>
       </div>

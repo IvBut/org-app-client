@@ -1,0 +1,29 @@
+<form [formGroupName]="controlKey">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Навык</mat-label>
+      <input matInput placeholder="Введите название" formControlName="name" />
+      <mat-error><cur-validation-errors controlKey="name"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="mt-2">
+    <mat-radio-group formControlName="type">
+      @for (item of types; track $index) {
+        <mat-radio-button [value]="item">{{ typeLabel(item) }}</mat-radio-button>
+      }
+    </mat-radio-group>
+    <mat-error><cur-validation-errors controlKey="type"></cur-validation-errors></mat-error>
+  </div>
+  <div class="mt-2">
+    <cur-pick-experience formControlName="level" [pickExpOptions]="SKILL_OPTIONS">
+      <ng-template #pickExpLabel let-exp>
+        @if (!exp?.label) {
+          <p>Оцените свой навык по шкале</p>
+        } @else {
+          <p>{{ exp.label }}</p>
+        }
+      </ng-template></cur-pick-experience
+    >
+    <mat-error><cur-validation-errors controlKey="level"></cur-validation-errors></mat-error>
+  </div>
+</form>

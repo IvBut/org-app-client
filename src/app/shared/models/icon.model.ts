@@ -17,7 +17,11 @@ export enum EIconName {
   PHOTO_CAMERA = 'photo_camera',
   EDIT = 'edit',
   DELETE = 'delete',
-  DRAG = 'drag'
+  DRAG = 'drag',
+  SKILL = 'skill',
+  SCHOOL = 'school',
+  WORK = 'work',
+  PERSON = 'person'
 }
 
 export enum EIconSize {
@@ -116,5 +120,21 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('drag_pan'),
     name: EIconName.DRAG
+  },
+  {
+    fileName: getPath('skill'),
+    name: EIconName.SKILL
+  },
+  {
+    fileName: getPath('school'),
+    name: EIconName.SCHOOL
+  },
+  {
+    fileName: getPath('work'),
+    name: EIconName.WORK
+  },
+  {
+    fileName: getPath('person'),
+    name: EIconName.PERSON
   }
 ];

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.title-and-icon {
+  display: flex;
+  align-items: start;
+  flex: 1 1 auto;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.action-buttons {
+  margin-right: auto;
+  .move-icon {
+    cursor: grab;
+  }
+  .settings {
+    cursor: pointer;
+    transition: all 0.35s linear;
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+}

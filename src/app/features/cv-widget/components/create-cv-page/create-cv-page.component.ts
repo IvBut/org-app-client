@@ -15,13 +15,17 @@ export class CreateCvPageComponent {
   private _formBuilder = inject(FormBuilder);
   cvWizardData: TCVWizardModelGroup = this._formBuilder.group({}) as unknown as TCVWizardModelGroup;
 
-  validateStep(stepName: TValidateFormName) {
-    const form = this.cvWizardData.controls[stepName];
-    updateValueAndValidity(form);
+  validateStep(stepNames: TValidateFormName[]) {
+    for (const item of stepNames) {
+      const form = this.cvWizardData.controls[item];
+      if (form) {
+        updateValueAndValidity(form);
+      }
+    }
   }
 
-  next(stepName: TValidateFormName) {
-    this.validateStep(stepName);
+  next(stepNames: TValidateFormName[]) {
+    this.validateStep(stepNames);
     this.cdr.markForCheck();
   }
 }

@@ -1,0 +1,27 @@
+@for (sectionControl of settingsList.controls; track $index) {
+  <mat-card appearance="outlined" [ngClass]="{ 'mt-5': !$first }">
+    <mat-card-header>
+      <cur-info-header [settings]="sectionControl"></cur-info-header>
+    </mat-card-header>
+    <mat-card-content>
+      @switch (sectionControl.controls.sectionId.value) {
+        @case (ESectionId.EDUCATION) {
+          <cur-education-list [controlKey]="educationControlKey"></cur-education-list>
+        }
+        @case (ESectionId.WORK_EXPERIENCE) {
+          <cur-work-exp-list [controlKey]="workExpControlKey"></cur-work-exp-list>
+        }
+        @case (ESectionId.SKILLS) {
+          <cur-skills-list
+            [initModel]="skillsInitModel"
+            [controlKey]="skillsControlKey"></cur-skills-list>
+        }
+        @case (ESectionId.PROFILE) {
+          <cur-profile-data-form
+            [initModel]="profileInitModel"
+            [controlKey]="profileControlKey"></cur-profile-data-form>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+}

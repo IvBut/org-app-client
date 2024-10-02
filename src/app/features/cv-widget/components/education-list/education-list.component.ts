@@ -3,11 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   inject,
   Input,
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlContainer, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
@@ -40,6 +42,7 @@ export class EducationListComponent implements OnInit, OnDestroy {
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
+  private destroyRef = inject(DestroyRef);
   protected readonly EIconName = EIconName;
   parentContainer = inject(ControlContainer);
   dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
@@ -53,6 +56,7 @@ export class EducationListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.parentFormGroup.addControl(this.controlKey, this._formBuilder.array([]));
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {
@@ -77,7 +81,8 @@ export class EducationListComponent implements OnInit, OnDestroy {
           autoFocus: false
         }
       )
-      .closed.subscribe((data: TNullableType<FormGroup<IEducationModel>>) => {
+      .closed.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: TNullableType<FormGroup<IEducationModel>>) => {
         if (data) {
           if (mode === 'create') {
             this.list.push(data);

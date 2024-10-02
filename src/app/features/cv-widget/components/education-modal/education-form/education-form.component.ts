@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   Input,
@@ -38,6 +39,10 @@ const FORMATS = {
   ],
   encapsulation: ViewEncapsulation.None,
   styles: `
+    :host {
+      display: block;
+    }
+
     .hide-date-picker-panel .mat-calendar-period-button {
       pointer-events: none;
     }
@@ -58,6 +63,7 @@ export class EducationFormComponent implements OnInit, OnDestroy {
   @Input() initModel?: TNullableType<IEducationModel>;
   @Input({ required: true }) controlKey = '';
 
+  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   parentContainer = inject(ControlContainer);
 
   fg: FormGroup<IEducationModel>;
@@ -108,6 +114,7 @@ export class EducationFormComponent implements OnInit, OnDestroy {
       description: new FormControl(this.initModel?.description ?? '')
     });
     this.parentFormGroup.addControl(this.controlKey, this.fg);
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {
