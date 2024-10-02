@@ -44,7 +44,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: varialbes.$sidebar-transition;;
+        transition: varialbes.$sidebar-transition;
         &-fliped {
           transform: rotate(180deg);
         }
@@ -83,7 +83,7 @@
 
   // buffer to make it easier to grab the resize handle
   &::after {
-    content: "";
+    content: '';
     display: block;
 
     height: 100%;

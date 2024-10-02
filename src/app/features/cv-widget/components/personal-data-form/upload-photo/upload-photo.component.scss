@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-input[type="file"] {
+input[type='file'] {
   display: none;
 }
 
@@ -72,8 +72,8 @@ input[type="file"] {
     left: 0;
     right: 0;
     height: 0;
-    background: rgba(0,0,0,0.62);
-    transition: all .75s linear;
+    background: rgba(0, 0, 0, 0.62);
+    transition: all 0.75s linear;
     color: white;
     padding: 5px;
     display: flex;
@@ -89,7 +89,7 @@ input[type="file"] {
     }
   }
 
-  &:hover &-overlay-info{
+  &:hover &-overlay-info {
     height: 80%;
     top: unset;
   }

@@ -3,7 +3,7 @@
     .field-in-row-#{$i} {
       mat-form-field {
         width: calc(100% / #{$i});
-        @if($i > 1) {
+        @if ($i > 1) {
           &:nth-child(odd) {
             padding-left: 8px;
             padding-right: 8px;
@@ -16,7 +16,7 @@
             padding-left: 0;
           }
           &:last-child {
-            padding-right: 0
+            padding-right: 0;
           }
         }
       }

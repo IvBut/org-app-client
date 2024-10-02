@@ -20,8 +20,12 @@ export function updateValueAndValidity<T extends AbstractControl>(
         updateValueAndValidity(formControl);
       });
     } else if (control instanceof FormControl) {
-      markAsTouched && control.markAsTouched();
-      updateValue && control.updateValueAndValidity();
+      if (markAsTouched) {
+        control.markAsTouched();
+      }
+      if (updateValue) {
+        control.updateValueAndValidity();
+      }
     } else {
       throw new Error('Error: unexpected control value');
     }

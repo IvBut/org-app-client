@@ -14,7 +14,7 @@ a {
   transition: background-color 75ms ease-out;
 
   .text-container {
-    @include mixins.textOverflow()
+    @include mixins.textOverflow();
   }
 
   &:hover {

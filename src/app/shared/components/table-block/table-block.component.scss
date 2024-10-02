@@ -8,7 +8,7 @@
 }
 
 .icon {
-  @include mixins.icon-size(90px)
+  @include mixins.icon-size(90px);
 }
 
 .buttons {
@@ -16,4 +16,3 @@
   padding: 10px 0;
   text-align: center;
 }
-

@@ -39,7 +39,9 @@ export class ExpanderComponent implements AfterViewInit {
   handleActionClick(event: MouseEvent, index: number, btn: IExpanderItemAction) {
     event.stopPropagation();
     const action = this.expanderItems.get(index).actionClick;
-    action && action.emit({ btnName: btn.btnName, index });
+    if (action) {
+      action.emit({ btnName: btn.btnName, index });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -50,6 +52,8 @@ export class ExpanderComponent implements AfterViewInit {
 
   drop(event: CdkDragDrop<any, any>) {
     moveItemInArray(this.expanderItems.toArray(), event.previousIndex, event.currentIndex);
-    this.dropEnd && this.dropEnd.emit(event);
+    if (this.dropEnd) {
+      this.dropEnd.emit(event);
+    }
   }
 }

@@ -21,6 +21,10 @@
           }
         ],
         "no-unused-vars": "off",
+        "no-unused-expressions": [
+          "warn",
+          { "allowShortCircuit": true, "allowTernary": true, "allowTaggedTemplates": true }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
