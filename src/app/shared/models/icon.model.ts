@@ -22,7 +22,8 @@ export enum EIconName {
   SCHOOL = 'school',
   WORK = 'work',
   PERSON = 'person',
-  LANGUAGE = 'language'
+  LANGUAGE = 'language',
+  SHARE = 'share'
 }
 
 export enum EIconSize {
@@ -141,5 +142,9 @@ export const iconConfig: IIconConfig[] = [
   {
     fileName: getPath('language'),
     name: EIconName.LANGUAGE
+  },
+  {
+    fileName: getPath('share'),
+    name: EIconName.SHARE
   }
 ];

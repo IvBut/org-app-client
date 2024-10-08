@@ -1,0 +1,12 @@
+<cur-add-list-btn (clickAdd)="handleAdd()">Добавить ссылку</cur-add-list-btn>
+<div class="mt-3">
+  <cur-expander [multi]="true" (dropEnd)="drop($event)">
+    @for (skillItem of list.controls; track $index) {
+      <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
+        <ng-template curExpanderTitle>
+            <a [href]="skillItem.controls.link.value"   rel="noopener" target="_blank">{{skillItem.controls.label.value}}</a>
+        </ng-template>
+      </cur-expander-item>
+    }
+  </cur-expander>
+</div>

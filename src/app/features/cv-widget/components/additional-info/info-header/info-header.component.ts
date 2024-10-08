@@ -33,7 +33,8 @@ export class InfoHeaderComponent {
     [ESectionId.EDUCATION]: EIconName.SCHOOL,
     [ESectionId.SKILLS]: EIconName.SKILL,
     [ESectionId.PROFILE]: EIconName.PERSON,
-    [ESectionId.LANGUAGES]: EIconName.LANGUAGE
+    [ESectionId.LANGUAGES]: EIconName.LANGUAGE,
+    [ESectionId.LINKS]: EIconName.SHARE
   };
 
   get sectionId() {

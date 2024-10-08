@@ -12,6 +12,7 @@ import { ExtractFormControl, TNullableType } from '../../../../core/models/types
 import { TCVWizardModel } from '../../model/cv.model';
 import { TEducationModelData } from '../../model/education.model';
 import { TLanguageGroupModelData } from '../../model/languages.model';
+import { TLinkModelData } from '../../model/link.model';
 import { TProfileModelData } from '../../model/profile.model';
 import { ESectionId, ISectionSettings, TSectionSettingsGroup } from '../../model/section.model';
 import { ESkillType, TISKillsGroupModelData } from '../../model/skill.model';
@@ -40,6 +41,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
   @Input({ required: true }) skillsControlKey = '';
   @Input({ required: true }) profileControlKey = '';
   @Input({ required: true }) languagesControlKey = '';
+  @Input({ required: true }) linksControlKey = '';
 
   @Input() initModel: ExtractFormControl<TCVWizardModel>;
 
@@ -85,6 +87,12 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     return (this.initModel?.profile || null) as unknown as TProfileModelData;
   }
 
+  get linksInitModel(): TLinkModelData[] {
+    return (this.initModel?.links?.length
+      ? this.initModel.links
+      : []) as unknown as TLinkModelData[];
+  }
+
   ngOnInit() {
     this.parentFormGroup.addControl(
       this.settingsControlKey,
@@ -107,6 +115,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         new FormGroup<ISectionSettings>({
           sectionId: new FormControl(ESectionId.LANGUAGES),
           sectionName: new FormControl('Языки'),
+          hideSection: new FormControl(false)
+        }),
+        new FormGroup<ISectionSettings>({
+          sectionId: new FormControl(ESectionId.LINKS),
+          sectionName: new FormControl('Социальные сети'),
           hideSection: new FormControl(false)
         }),
         new FormGroup<ISectionSettings>({

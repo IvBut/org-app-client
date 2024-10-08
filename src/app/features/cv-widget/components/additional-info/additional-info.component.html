@@ -30,6 +30,11 @@
             [initModel]="profileInitModel"
             [controlKey]="profileControlKey"></cur-profile-data-form>
         }
+        @case (ESectionId.LINKS) {
+          <cur-links-list
+            [initModel]="linksInitModel"
+            [controlKey]="linksControlKey"></cur-links-list>
+        }
       }
     </mat-card-content>
   </mat-card>
