@@ -4,7 +4,9 @@
     @for (skillItem of list.controls; track $index) {
       <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
         <ng-template curExpanderTitle>
-            <a [href]="skillItem.controls.link.value"   rel="noopener" target="_blank">{{skillItem.controls.label.value}}</a>
+          <a [href]="skillItem.controls.link.value" rel="noopener" target="_blank">{{
+            skillItem.controls.label.value
+          }}</a>
         </ng-template>
       </cur-expander-item>
     }
