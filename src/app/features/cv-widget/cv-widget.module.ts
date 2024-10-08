@@ -47,6 +47,9 @@ import { CreateCvPageComponent } from './components/create-cv-page/create-cv-pag
 import { EducationListComponent } from './components/education-list/education-list.component';
 import { EducationFormComponent } from './components/education-modal/education-form/education-form.component';
 import { EducationModalComponent } from './components/education-modal/education-modal.component';
+import { LanguageFormComponent } from './components/language-modal/language-form/language-form.component';
+import { LanguageModalComponent } from './components/language-modal/language-modal.component';
+import { LanguagesListComponent } from './components/languages-list/languages-list.component';
 import { PersonalDataFormComponent } from './components/personal-data-form/personal-data-form.component';
 import { UploadPhotoComponent } from './components/personal-data-form/upload-photo/upload-photo.component';
 import { ProfileDataFormComponent } from './components/profile-data-form/profile-data-form.component';
@@ -99,7 +102,10 @@ const routes: Routes = [
     SkillsListComponent,
     SkillsModalComponent,
     SkillsFormComponent,
-    ProfileDataFormComponent
+    ProfileDataFormComponent,
+    LanguagesListComponent,
+    LanguageModalComponent,
+    LanguageFormComponent
   ],
   imports: [
     RouterModule.forChild(routes),

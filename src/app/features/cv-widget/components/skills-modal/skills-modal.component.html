@@ -1,7 +1,7 @@
-<form [formGroup]="modalDataGroup" (ngSubmit)="handleSave()">
-  <cur-skills-form [initModel]="modalData.modalData" controlKey="skillForm"></cur-skills-form>
+<form [formGroup]="form" (ngSubmit)="handleSave()">
+  <cur-skills-form [initModel]="injectedData.modalData" [controlKey]="controlKey"></cur-skills-form>
 </form>
-<ng-container *curModalActions="modalData.containerInstance">
+<ng-container *curModalActions="injectedData.containerInstance">
   <button mat-stroked-button color="primary" type="button" (click)="handleCancel()">Отмена</button>
   <button mat-flat-button color="primary" type="submit" (click)="handleSave()">Сохранить</button>
 </ng-container>

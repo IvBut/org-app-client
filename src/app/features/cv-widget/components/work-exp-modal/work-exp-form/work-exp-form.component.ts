@@ -9,14 +9,18 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as dateFns from 'date-fns';
 import { TNullableType } from '../../../../../core/models/types';
 import { getToday, getTomorrow, geYearsBefore } from '../../../../../core/utils/date';
 import { DEFAULT_EDITOR_TOOLBAR } from '../../../model/editor.configs';
-import { IWorkExpModel } from '../../../model/work-exp.model';
+import { IWorkExpModel, TWorkExpModelData } from '../../../model/work-exp.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../../attach-to-container/attach-to-container.directive';
 
 const FORMATS = {
   parse: {
@@ -34,21 +38,14 @@ const FORMATS = {
   selector: 'cur-work-exp-form',
   templateUrl: './work-exp-form.component.html',
   styleUrl: './work-exp-form.component.scss',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  viewProviders: [controlContainerProvider],
   encapsulation: ViewEncapsulation.None,
   providers: [{ provide: MAT_DATE_FORMATS, useValue: FORMATS }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkExpFormComponent implements OnInit, OnDestroy {
-  @Input() initModel?: TNullableType<IWorkExpModel>;
-  @Input({ required: true }) controlKey = '';
+export class WorkExpFormComponent extends AttachToContainer implements OnInit, OnDestroy {
+  @Input() initModel?: TNullableType<TWorkExpModelData>;
 
-  parentContainer = inject(ControlContainer);
   destroyRef = inject(DestroyRef);
 
   fg: FormGroup<IWorkExpModel>;
@@ -95,10 +92,6 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
     );
   };
 
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
-
   setMonthAndYear(normalizedMonthAndYear: Date, datepicker: MatDatepicker<Date>, key: string) {
     const ctrlValue = normalizedMonthAndYear ?? getToday();
     this.fg.get(key).setValue(ctrlValue);
@@ -122,7 +115,7 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
       stillWorking: new FormControl(!!this.initModel?.stillWorking),
       description: new FormControl(this.initModel?.description ?? '', [])
     } as any);
-    this.parentFormGroup.addControl(this.controlKey, this.fg);
+    this.registerControl(this.fg);
     this.fg
       .get('stillWorking')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
@@ -141,6 +134,6 @@ export class WorkExpFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
+    this.unRegisterControl();
   }
 }

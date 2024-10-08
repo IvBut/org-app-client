@@ -1,22 +1,18 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TNullableType } from '../../../../../core/models/types';
 import { TPickExpOption } from '../../../../../shared/models/pick-experience.model';
 import {
   ESkillType,
   ISkillModel,
-  SKILL_OPTIONS,
   SKILLS_TYPE_MAP,
+  SKILL_OPTIONS,
   TSkillModelData
 } from '../../../model/skill.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../../attach-to-container/attach-to-container.directive';
 
 export type TSkillFormGroup = Omit<ISkillModel, 'level'> & { type: FormControl<string> } & {
   level: FormControl<TPickExpOption>;
@@ -25,12 +21,7 @@ export type TSkillFormGroup = Omit<ISkillModel, 'level'> & { type: FormControl<s
 @Component({
   selector: 'cur-skills-form',
   templateUrl: './skills-form.component.html',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  viewProviders: [controlContainerProvider],
   styles: `
     :host {
       display: block;
@@ -38,14 +29,11 @@ export type TSkillFormGroup = Omit<ISkillModel, 'level'> & { type: FormControl<s
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsFormComponent implements OnInit, OnDestroy {
+export class SkillsFormComponent extends AttachToContainer implements OnInit, OnDestroy {
   @Input() initModel?: TNullableType<TSkillModelData & { type: TNullableType<string> }>;
-  @Input({ required: true }) controlKey = '';
 
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   protected readonly SKILL_OPTIONS = SKILL_OPTIONS;
 
-  parentContainer = inject(ControlContainer);
   fg: FormGroup<TSkillFormGroup>;
 
   get types() {
@@ -55,10 +43,6 @@ export class SkillsFormComponent implements OnInit, OnDestroy {
   typeLabel = (type: string) => {
     return SKILLS_TYPE_MAP[type];
   };
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
-
   ngOnInit() {
     this.fg = new FormGroup<TSkillFormGroup>({
       name: new FormControl(this.initModel?.name ?? '', [Validators.required]),
@@ -68,11 +52,10 @@ export class SkillsFormComponent implements OnInit, OnDestroy {
       ),
       type: new FormControl(this.initModel?.type ?? null, [Validators.required])
     });
-    this.parentFormGroup.addControl(this.controlKey, this.fg);
-    this.cdr.markForCheck();
+    this.registerControl(this.fg);
   }
 
   ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
+    this.unRegisterControl();
   }
 }

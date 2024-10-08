@@ -1,0 +1,17 @@
+<cur-add-list-btn (clickAdd)="handleAdd()">Добавить язык</cur-add-list-btn>
+<cur-expander class="mt-3" [multi]="true" (dropEnd)="drop($event)">
+  @for (lang of list.controls; track $index) {
+    <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
+      <ng-template curExpanderTitle>
+        @if (lang.controls.language.value) {
+          <p>{{ lang.controls.language.value }}&nbsp;</p>
+        }
+      </ng-template>
+      <ng-template curExpanderTitleDescription>
+        <div class="ml-5 range">
+          <h3>{{ lang.controls.level.value }}</h3>
+        </div>
+      </ng-template>
+    </cur-expander-item>
+  }
+</cur-expander>

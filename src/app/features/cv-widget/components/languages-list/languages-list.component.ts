@@ -2,110 +2,106 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   Input,
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
-import { TNullableType } from '../../../../core/models/types';
+import { ExtractFormControl, TNullableType } from '../../../../core/models/types';
 import { moveItemInFormArray } from '../../../../core/utils/formUtils';
 import {
   EExpanderItemAction,
   TExpanderItemActionOutput,
   TExpanderItemDragConfig
 } from '../../../../shared/components/expander/models/expander.model';
-import { EIconName } from '../../../../shared/models/icon.model';
-import { IWorkExpModel, TWorkExpDataForm, TWorkExpModelData } from '../../model/work-exp.model';
+import { TLanguageDataForm, TLanguageGroupModelData } from '../../model/languages.model';
 import {
   AttachToContainer,
   controlContainerProvider
 } from '../attach-to-container/attach-to-container.directive';
-import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.component';
+import { TLangFormGroup } from '../language-modal/language-form/language-form.component';
+import { LanguageModalComponent } from '../language-modal/language-modal.component';
 
 @Component({
-  selector: 'cur-work-exp-list',
-  templateUrl: './work-exp-list.component.html',
-  styleUrl: './work-exp-list.component.scss',
+  selector: 'cur-languages-list',
+  templateUrl: './languages-list.component.html',
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkExpListComponent extends AttachToContainer implements OnInit, OnDestroy {
-  @Input() initModel?: TNullableType<TWorkExpModelData>[];
+export class LanguagesListComponent extends AttachToContainer implements OnInit, OnDestroy {
+  @Input() initModel?: TNullableType<TLanguageGroupModelData>[];
 
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
-  protected readonly EIconName = EIconName;
+  private destroyRef = inject(DestroyRef);
   dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
 
-  get list(): FormArray<TWorkExpDataForm> {
-    return this.parentFormGroup.get(this.controlKey) as FormArray<TWorkExpDataForm>;
+  get list(): FormArray<TLanguageDataForm> {
+    return this.childControl as FormArray<TLanguageDataForm>;
   }
-  ngOnInit() {
+  ngOnInit(): void {
     this.registerControl(
       this._formBuilder.array(
         this.initModel?.length
           ? this.initModel.map(item => {
               return this._formBuilder.group({
-                company: [item?.company ?? ''],
-                jobPosition: [item?.jobPosition ?? ''],
-                location: [item?.location ?? ''],
-                startDate: [item?.startDate ?? null],
-                endDate: [item?.endDate ?? null],
-                stillWorking: [!!item?.stillWorking],
-                description: [item?.description ?? '']
+                language: [item?.language ?? ''],
+                level: [item?.level ?? null]
               });
             })
           : []
       )
     );
   }
-  ngOnDestroy() {
-    this.unRegisterControl();
-  }
 
   private openModal(
     mode: 'create' | 'edit',
-    initData: TNullableType<IWorkExpModel>,
+    initData: TNullableType<TLanguageGroupModelData>,
     index?: TNullableType<number>
   ) {
     this.modalService
       .openModal(
-        WorkExpModalComponent,
+        LanguageModalComponent,
         {
-          size: EModalSize.LARGE,
+          size: EModalSize.MEDIUM,
           disableClose: true,
           modalData: initData,
-          caption: mode === 'create' ? 'Добавить опыт работы' : 'Редактировать опыт работы'
+          caption: mode === 'create' ? 'Добавить язык' : 'Редактировать язык'
         },
         {
           autoFocus: false
         }
       )
-      .closed.subscribe((data: TNullableType<TWorkExpModelData>) => {
+      .closed.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: TNullableType<ExtractFormControl<TLangFormGroup>>) => {
         if (data) {
           if (mode === 'create') {
             this.list.push(
               this._formBuilder.group({
-                company: [data?.company ?? ''],
-                jobPosition: [data?.jobPosition ?? ''],
-                location: [data?.location ?? ''],
-                startDate: [data?.startDate ?? null],
-                endDate: [data?.endDate ?? null],
-                stillWorking: [!!data?.stillWorking],
-                description: [data?.description ?? '']
+                language: [data.language],
+                level: [data.level.value]
               })
             );
           } else {
-            this.list.at(index).patchValue(data);
+            this.list.at(index).patchValue({
+              language: data.language,
+              level: data.level.value
+            });
           }
           this.cdr.markForCheck();
         }
       });
   }
-
   handleAdd() {
     this.openModal('create', null);
   }
@@ -117,7 +113,7 @@ export class WorkExpListComponent extends AttachToContainer implements OnInit, O
 
   handleEdit(idx: number) {
     const group = this.list.at(idx);
-    this.openModal('edit', group.value as unknown as IWorkExpModel, idx);
+    this.openModal('edit', group.value as TLanguageGroupModelData, idx);
   }
 
   handleAction({ index, btnName }: TExpanderItemActionOutput) {
@@ -134,5 +130,9 @@ export class WorkExpListComponent extends AttachToContainer implements OnInit, O
   drop(event: CdkDragDrop<any>) {
     moveItemInFormArray(this.list, event.previousIndex, event.currentIndex);
     this.cdr.markForCheck();
+  }
+
+  ngOnDestroy() {
+    this.unRegisterControl();
   }
 }

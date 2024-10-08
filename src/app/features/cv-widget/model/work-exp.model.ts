@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { TNull } from '../../../core/models/types';
+import { ExtractFormControl, TNull } from '../../../core/models/types';
 
 export interface IWorkExpModel {
   company: FormControl<string>;
@@ -11,4 +11,5 @@ export interface IWorkExpModel {
   stillWorking: FormControl<boolean>;
 }
 
+export type TWorkExpModelData = ExtractFormControl<IWorkExpModel>;
 export type TWorkExpDataForm = FormGroup<IWorkExpModel>;

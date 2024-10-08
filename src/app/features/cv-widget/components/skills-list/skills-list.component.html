@@ -1,21 +1,23 @@
 <cur-add-list-btn (clickAdd)="handleAdd()">Добавить навык</cur-add-list-btn>
 <cur-expander [multi]="true" (dropEnd)="drop($event, list)">
-  @for (exp of list.controls; track $index) {
+  @for (skillControl of list.controls; track $index) {
     <cur-expander-item [dragConfig]="dragConfig" [actions]="[]">
       <ng-template curExpanderTitle>
-        @if (exp.controls.type?.value) {
-          <p>{{ typeLabel(exp.controls.type?.value) }}&nbsp;</p>
+        @if (skillControl.controls.type?.value) {
+          <p>{{ typeLabel(skillControl.controls.type?.value) }}&nbsp;</p>
         }
       </ng-template>
       <ng-template curExpanderContent>
         <mat-chip-set
           cdkDropList
           cdkDropListOrientation="horizontal"
-          (cdkDropListDropped)="drop($event, exp.controls.data)">
-          @for (skillItemControl of exp.controls.data.controls; track $index) {
+          (cdkDropListDropped)="drop($event, skillControl.controls.data)">
+          @for (skillItemControl of skillControl.controls.data.controls; track $index) {
             <mat-chip
               cdkDrag
-              (click)="handleEdit(exp.controls.type.value, $any(skillItemControl.value), $index)">
+              (click)="
+                handleEdit(skillControl.controls.type.value, $any(skillItemControl.value), $index)
+              ">
               <div class="chip-content">
                 <span
                   >{{ skillItemControl.controls.name.value }} -
@@ -23,7 +25,7 @@
                 >
                 <mat-icon
                   class="delete"
-                  (click)="handleDelete($any(exp.controls.type.value), $event, $index)"
+                  (click)="handleDelete($any(skillControl.controls.type.value), $event, $index)"
                   >cancel</mat-icon
                 >
               </div>

@@ -1,16 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import { ControlContainer, FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TNullableType } from '../../../../core/models/types';
 import { DEFAULT_EDITOR_TOOLBAR } from '../../model/editor.configs';
 import { ProfileModel, TProfileModelData } from '../../model/profile.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../attach-to-container/attach-to-container.directive';
 
 @Component({
   selector: 'cur-profile-data-form',
@@ -24,38 +20,25 @@ import { ProfileModel, TProfileModelData } from '../../model/profile.model';
       height: 250px;
     }
   `,
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileDataFormComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) controlKey = '';
+export class ProfileDataFormComponent extends AttachToContainer implements OnInit, OnDestroy {
   @Input() initModel: TNullableType<TProfileModelData>;
-
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  parentContainer = inject(ControlContainer);
 
   form: FormGroup<ProfileModel>;
   readonly descriptionConfig: any = {
     toolbar: DEFAULT_EDITOR_TOOLBAR
   };
 
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
   ngOnInit() {
     this.form = new FormGroup<ProfileModel>({
       summary: new FormControl(this.initModel?.summary ?? '')
     });
-    this.parentFormGroup.addControl(this.controlKey, this.form);
-    this.cdr.markForCheck();
+    this.registerControl(this.form);
   }
 
   ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
+    this.unRegisterControl();
   }
 }

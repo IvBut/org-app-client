@@ -1,5 +1,6 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { TEducationDataForm } from './education.model';
+import { TLanguageDataForm } from './languages.model';
 import { TPersonalDataForm } from './personal-data.model';
 import { TProfileDataForm } from './profile.model';
 import { TSectionSettingsGroup } from './section.model';
@@ -13,5 +14,6 @@ export type TCVWizardModel = {
   sectionSettings: FormArray<TSectionSettingsGroup>;
   skills: FormArray<TSkillsDataForm>;
   profile: TProfileDataForm;
+  languages: FormArray<TLanguageDataForm>;
 };
-export type TCVWizardModelGroup = FormGroup<TCVWizardModel>;
+export type TCVWizardDataForm = FormGroup<TCVWizardModel>;

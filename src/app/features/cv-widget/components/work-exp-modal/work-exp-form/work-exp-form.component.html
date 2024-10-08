@@ -2,21 +2,21 @@
   <div class="field-in-row-1">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Компания</mat-label>
-      <input matInput placeholder="Введите название" formControlName="company" />
+      <input matInput placeholder="Введите название" [formControlName]="'company'" />
       <mat-error><cur-validation-errors controlKey="company"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
   <div class="field-in-row-2 mt-4">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Должность</mat-label>
-      <input matInput placeholder="Название должности" formControlName="jobPosition" />
+      <input matInput placeholder="Название должности" [formControlName]="'jobPosition'" />
       <mat-error
         ><cur-validation-errors controlKey="jobPosition"></cur-validation-errors
       ></mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Локация</mat-label>
-      <input matInput placeholder="Место расположения\Город" formControlName="location" />
+      <input matInput placeholder="Место расположения\Город" [formControlName]="'location'" />
       <mat-error><cur-validation-errors controlKey="location"></cur-validation-errors></mat-error>
     </mat-form-field>
   </div>
@@ -27,7 +27,7 @@
         matInput
         [matDatepicker]="dpStart"
         [matDatepickerFilter]="startDateFilter"
-        formControlName="startDate" />
+        [formControlName]="'startDate'" />
       <mat-datepicker-toggle matIconSuffix [for]="dpStart"></mat-datepicker-toggle>
       <mat-datepicker
         #dpStart
@@ -46,7 +46,7 @@
       <input
         matInput
         [matDatepicker]="dpEnd"
-        formControlName="endDate"
+        [formControlName]="'endDate'"
         [matDatepickerFilter]="endDateFilter" />
       <mat-datepicker-toggle matIconSuffix [for]="dpEnd"></mat-datepicker-toggle>
       <mat-datepicker
@@ -60,7 +60,7 @@
           [configForErrors]="dateErrors"></cur-validation-errors
       ></mat-error>
     </mat-form-field>
-    <mat-checkbox formControlName="stillWorking">Ещё работаю</mat-checkbox>
+    <mat-checkbox [formControlName]="'stillWorking'">Ещё работаю</mat-checkbox>
   </div>
   <div class="mt-4">
     <pre>Опишите ваши обязанности, достижения и т.д.</pre>
@@ -70,6 +70,6 @@
       class="editor"
       [modules]="descriptionConfig"
       placeholder="Введите описание..."
-      formControlName="description"></quill-editor>
+      [formControlName]="'description'"></quill-editor>
   </div>
 </form>

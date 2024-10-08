@@ -1,7 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
@@ -10,7 +9,7 @@ import {
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ControlContainer, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
 import { TNullableType } from '../../../../core/models/types';
@@ -20,52 +19,58 @@ import {
   TExpanderItemActionOutput,
   TExpanderItemDragConfig
 } from '../../../../shared/components/expander/models/expander.model';
-import { EIconName } from '../../../../shared/models/icon.model';
-import { IEducationModel, TEducationDataForm } from '../../model/education.model';
+import { TEducationDataForm, TEducationModelData } from '../../model/education.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../attach-to-container/attach-to-container.directive';
 import { EducationModalComponent } from '../education-modal/education-modal.component';
 
 @Component({
   selector: 'cur-education-list',
   templateUrl: './education-list.component.html',
   styleUrl: './education-list.component.scss',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EducationListComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) controlKey = '';
+export class EducationListComponent extends AttachToContainer implements OnInit, OnDestroy {
+  @Input() initModel?: TNullableType<TEducationModelData>[];
 
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
   private destroyRef = inject(DestroyRef);
-  protected readonly EIconName = EIconName;
-  parentContainer = inject(ControlContainer);
   dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
 
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
+  get list(): FormArray<TEducationDataForm> {
+    return this.childControl as FormArray<TEducationDataForm>;
   }
 
-  get list(): FormArray<TEducationDataForm> {
-    return this.parentFormGroup.get(this.controlKey) as FormArray<TEducationDataForm>;
-  }
   ngOnInit() {
-    this.parentFormGroup.addControl(this.controlKey, this._formBuilder.array([]));
-    this.cdr.markForCheck();
+    this.registerControl(
+      this._formBuilder.array(
+        this.initModel?.length
+          ? this.initModel.map(item => {
+              return this._formBuilder.group({
+                institution: [item?.institution ?? ''],
+                degree: [item?.degree ?? ''],
+                location: [item?.location ?? ''],
+                description: [item?.description ?? ''],
+                startYear: [item?.startYear ?? null],
+                endYear: [item?.endYear ?? null]
+              });
+            })
+          : []
+      )
+    );
   }
 
   ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
+    this.unRegisterControl();
   }
 
   private openModal(
     mode: 'create' | 'edit',
-    initData: TNullableType<IEducationModel>,
+    initData: TNullableType<TEducationModelData>,
     index?: TNullableType<number>
   ) {
     this.modalService
@@ -82,12 +87,21 @@ export class EducationListComponent implements OnInit, OnDestroy {
         }
       )
       .closed.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: TNullableType<FormGroup<IEducationModel>>) => {
+      .subscribe((data: TNullableType<TEducationModelData>) => {
         if (data) {
           if (mode === 'create') {
-            this.list.push(data);
+            this.list.push(
+              this._formBuilder.group({
+                institution: [data?.institution ?? ''],
+                degree: [data?.degree ?? ''],
+                location: [data?.location ?? ''],
+                description: [data?.description ?? ''],
+                startYear: [data?.startYear ?? null],
+                endYear: [data?.endYear ?? null]
+              })
+            );
           } else {
-            this.list.setControl(index, data);
+            this.list.at(index).patchValue(data);
           }
           this.cdr.markForCheck();
         }
@@ -105,7 +119,7 @@ export class EducationListComponent implements OnInit, OnDestroy {
 
   handleEdit(idx: number) {
     const group = this.list.at(idx);
-    this.openModal('edit', group.value as unknown as IEducationModel, idx);
+    this.openModal('edit', group.value as TEducationModelData, idx);
   }
 
   handleAction({ index, btnName }: TExpanderItemActionOutput) {

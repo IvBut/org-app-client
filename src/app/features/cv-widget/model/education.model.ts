@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { TNull } from '../../../core/models/types';
+import { ExtractFormControl, TNull } from '../../../core/models/types';
 
 export interface IEducationModel {
   institution: FormControl<string>;
@@ -9,5 +9,5 @@ export interface IEducationModel {
   endYear: FormControl<TNull<Date>>;
   description: FormControl<string>;
 }
-
+export type TEducationModelData = ExtractFormControl<IEducationModel>;
 export type TEducationDataForm = FormGroup<IEducationModel>;
