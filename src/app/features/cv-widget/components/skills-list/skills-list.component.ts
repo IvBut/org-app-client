@@ -1,7 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
@@ -10,7 +9,7 @@ import {
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ControlContainer, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
 import { ExtractFormControl, TNullableType } from '../../../../core/models/types';
@@ -22,6 +21,10 @@ import {
   TISKillsGroupModelData,
   TSkillsDataForm
 } from '../../model/skill.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../attach-to-container/attach-to-container.directive';
 import { TSkillFormGroup } from '../skills-modal/skills-form/skills-form.component';
 import { SkillsModalComponent } from '../skills-modal/skills-modal.component';
 
@@ -29,43 +32,36 @@ import { SkillsModalComponent } from '../skills-modal/skills-modal.component';
   selector: 'cur-skills-list',
   templateUrl: './skills-list.component.html',
   styleUrl: './skills-list.component.scss',
+  viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsListComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) controlKey = '';
+export class SkillsListComponent extends AttachToContainer implements OnInit, OnDestroy {
   @Input() initModel?: TNullableType<TISKillsGroupModelData>[];
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
   private destroyRef = inject(DestroyRef);
-  parentContainer = inject(ControlContainer);
   dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
 
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
-
   get list(): FormArray<TSkillsDataForm> {
-    return this.parentFormGroup.get(this.controlKey) as FormArray<TSkillsDataForm>;
+    return this.childControl as FormArray<TSkillsDataForm>;
   }
 
   typeLabel = (type: string) => {
     return SKILLS_TYPE_MAP[type];
   };
   ngOnInit() {
-    this.parentFormGroup.addControl(
-      this.controlKey,
+    this.registerControl(
       this._formBuilder.array(
         this.initModel?.length
           ? this.initModel.map(el => {
-              return new FormGroup({
-                type: new FormControl(el.type),
+              return this._formBuilder.group({
+                type: [el.type],
                 data: this._formBuilder.array(
                   el?.data?.length
                     ? el.data.map(skill => {
-                        return new FormGroup({
-                          name: new FormControl(skill?.name || ''),
-                          level: new FormControl(skill?.level ?? null)
+                        return this._formBuilder.group({
+                          name: [skill?.name || ''],
+                          level: [skill?.level ?? null]
                         });
                       })
                     : []

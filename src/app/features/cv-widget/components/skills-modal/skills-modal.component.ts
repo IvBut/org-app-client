@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {
   MODAL_DATA_INJECTION_TOKEN,
@@ -16,23 +22,27 @@ import { updateValueAndValidity } from '../../../../core/utils/formUtils';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsModalComponent {
+export class SkillsModalComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  modalData = inject<TModalDataInjectionToken>(MODAL_DATA_INJECTION_TOKEN);
+  injectedData = inject<TModalDataInjectionToken>(MODAL_DATA_INJECTION_TOKEN);
 
-  modalDataGroup = this._formBuilder.group<any>({});
+  form = this._formBuilder.group<any>({});
+  controlKey: string = 'skillForm';
 
+  ngOnInit(): void {
+    this.form = this._formBuilder.group({});
+  }
   handleCancel() {
-    this.modalData.dialogRef.close();
+    this.injectedData.dialogRef.close();
   }
 
   handleSave() {
-    updateValueAndValidity(this.modalDataGroup);
+    updateValueAndValidity(this.form);
     this.cdr.markForCheck();
-    if (this.modalDataGroup.status === 'VALID') {
-      const group = this.modalDataGroup.get('skillForm');
-      this.modalData.dialogRef.close(group.value);
+    if (this.form.status === 'VALID') {
+      const group = this.form.get(this.controlKey);
+      this.injectedData.dialogRef.close(group.getRawValue());
     }
   }
 }

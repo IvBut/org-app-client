@@ -10,6 +10,8 @@ import {
   Input,
   Output,
   QueryList,
+  TemplateRef,
+  ViewEncapsulation,
   inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -20,6 +22,7 @@ import { IExpanderItemAction } from './models/expander.model';
   selector: 'cur-expander',
   templateUrl: './expander.component.html',
   styleUrl: './expander.component.scss',
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExpanderComponent implements AfterViewInit {
@@ -35,6 +38,10 @@ export class ExpanderComponent implements AfterViewInit {
   @Output() dropEnd = new EventEmitter<CdkDragDrop<any>>();
 
   @ContentChildren(ExpanderItemComponent) expanderItems: QueryList<ExpanderItemComponent>;
+
+  isContentExist(content: TemplateRef<any>): boolean {
+    return Boolean(content?.elementRef);
+  }
 
   handleActionClick(event: MouseEvent, index: number, btn: IExpanderItemAction) {
     event.stopPropagation();

@@ -1,7 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="handleSave()">
-  <cur-work-exp-form
-    [initModel]="injectedData.modalData"
-    [controlKey]="controlKey"></cur-work-exp-form>
+  <cur-link-form [initModel]="injectedData.modalData" [controlKey]="controlKey"></cur-link-form>
 </form>
 <ng-container *curModalActions="injectedData.containerInstance">
   <button mat-stroked-button color="primary" type="button" (click)="handleCancel()">Отмена</button>

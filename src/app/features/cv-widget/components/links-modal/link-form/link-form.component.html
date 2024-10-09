@@ -1,0 +1,16 @@
+<form [formGroupName]="controlKey">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Сайт\соц.сеть</mat-label>
+      <input matInput placeholder="Введите название" formControlName="label" />
+      <mat-error><cur-validation-errors controlKey="label"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-1 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Ссылка</mat-label>
+      <input matInput placeholder="Введите ссылку" formControlName="link" />
+      <mat-error><cur-validation-errors controlKey="link"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+</form>

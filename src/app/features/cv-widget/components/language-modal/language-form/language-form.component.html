@@ -1,0 +1,21 @@
+<form [formGroupName]="controlKey">
+  <div class="field-in-row-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Язык</mat-label>
+      <input matInput placeholder="Введите название" formControlName="language" />
+      <mat-error><cur-validation-errors controlKey="language"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="mt-2">
+    <cur-pick-experience formControlName="level" [pickExpOptions]="LANG_OPTIONS">
+      <ng-template #pickExpLabel let-exp>
+        @if (!exp?.label) {
+          <p>Оцените свой навык по шкале</p>
+        } @else {
+          <p>{{ exp.label }}</p>
+        }
+      </ng-template></cur-pick-experience
+    >
+    <mat-error><cur-validation-errors controlKey="level"></cur-validation-errors></mat-error>
+  </div>
+</form>

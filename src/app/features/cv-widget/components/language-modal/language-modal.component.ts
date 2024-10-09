@@ -11,12 +11,10 @@ import {
   TModalDataInjectionToken
 } from '../../../../core/models/modal.model';
 import { updateValueAndValidity } from '../../../../core/utils/formUtils';
-import { IEducationModel } from '../../model/education.model';
 
-type TModalData = FormGroup<IEducationModel>;
 @Component({
-  selector: 'cur-education-modal',
-  templateUrl: './education-modal.component.html',
+  selector: 'cur-language-modal',
+  templateUrl: './language-modal.component.html',
   styles: `
     :host {
       display: block;
@@ -24,16 +22,14 @@ type TModalData = FormGroup<IEducationModel>;
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EducationModalComponent implements OnInit {
+export class LanguageModalComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   injectedData = inject<TModalDataInjectionToken>(MODAL_DATA_INJECTION_TOKEN);
-
   form: FormGroup;
-  controlKey: string = 'educForm';
-
+  controlKey: string = 'langs';
   ngOnInit(): void {
-    this.form = this._formBuilder.group<TModalData>({} as TModalData);
+    this.form = this._formBuilder.group({});
   }
 
   handleCancel() {

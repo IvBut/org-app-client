@@ -6,20 +6,34 @@
     <mat-card-content>
       @switch (sectionControl.controls.sectionId.value) {
         @case (ESectionId.EDUCATION) {
-          <cur-education-list [controlKey]="educationControlKey"></cur-education-list>
+          <cur-education-list
+            [controlKey]="educationControlKey"
+            [initModel]="educationsInitModel"></cur-education-list>
         }
         @case (ESectionId.WORK_EXPERIENCE) {
-          <cur-work-exp-list [controlKey]="workExpControlKey"></cur-work-exp-list>
+          <cur-work-exp-list
+            [controlKey]="workExpControlKey"
+            [initModel]="worksInitModel"></cur-work-exp-list>
         }
         @case (ESectionId.SKILLS) {
           <cur-skills-list
             [initModel]="skillsInitModel"
             [controlKey]="skillsControlKey"></cur-skills-list>
         }
+        @case (ESectionId.LANGUAGES) {
+          <cur-languages-list
+            [initModel]="languagesInitModel"
+            [controlKey]="languagesControlKey"></cur-languages-list>
+        }
         @case (ESectionId.PROFILE) {
           <cur-profile-data-form
             [initModel]="profileInitModel"
             [controlKey]="profileControlKey"></cur-profile-data-form>
+        }
+        @case (ESectionId.LINKS) {
+          <cur-links-list
+            [initModel]="linksInitModel"
+            [controlKey]="linksControlKey"></cur-links-list>
         }
       }
     </mat-card-content>

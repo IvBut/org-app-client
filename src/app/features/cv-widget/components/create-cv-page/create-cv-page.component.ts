@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { updateValueAndValidity } from '../../../../core/utils/formUtils';
-import { TCVWizardModel, TCVWizardModelGroup } from '../../model/cv.model';
+import { TCVWizardDataForm, TCVWizardModel } from '../../model/cv.model';
 
 type TValidateFormName = keyof TCVWizardModel;
 @Component({
@@ -13,7 +13,7 @@ type TValidateFormName = keyof TCVWizardModel;
 export class CreateCvPageComponent {
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private _formBuilder = inject(FormBuilder);
-  cvWizardData: TCVWizardModelGroup = this._formBuilder.group({}) as unknown as TCVWizardModelGroup;
+  cvWizardData: TCVWizardDataForm = this._formBuilder.group({}) as unknown as TCVWizardDataForm;
 
   validateStep(stepNames: TValidateFormName[]) {
     for (const item of stepNames) {

@@ -9,7 +9,8 @@
       cdkDragLockAxis="y"
       [cdkDragDisabled]="!item.dragConfig?.isDraggable || expanderItems.length === 1"
       [disabled]="item.isDisabled"
-      [class.expander-panel--separated]="isSeparated">
+      [class.expander-panel--separated]="isSeparated"
+      [class.expander-panel--hide-content]="!isContentExist(item.content)">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <ng-container *ngTemplateOutlet="item.title; context: { $implicit: item }"></ng-container

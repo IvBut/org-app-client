@@ -2,11 +2,13 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   Input,
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
@@ -17,85 +19,81 @@ import {
   TExpanderItemActionOutput,
   TExpanderItemDragConfig
 } from '../../../../shared/components/expander/models/expander.model';
-import { EIconName } from '../../../../shared/models/icon.model';
-import { IWorkExpModel, TWorkExpDataForm, TWorkExpModelData } from '../../model/work-exp.model';
+import { TLinkDataForm, TLinkModelData } from '../../model/link.model';
 import {
   AttachToContainer,
   controlContainerProvider
 } from '../attach-to-container/attach-to-container.directive';
-import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.component';
+import { LinksModalComponent } from '../links-modal/links-modal.component';
 
 @Component({
-  selector: 'cur-work-exp-list',
-  templateUrl: './work-exp-list.component.html',
-  styleUrl: './work-exp-list.component.scss',
+  selector: 'cur-links-list',
+  templateUrl: './links-list.component.html',
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkExpListComponent extends AttachToContainer implements OnInit, OnDestroy {
-  @Input() initModel?: TNullableType<TWorkExpModelData>[];
+export class LinksListComponent extends AttachToContainer implements OnInit, OnDestroy {
+  @Input() initModel?: TNullableType<TLinkModelData>[];
 
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
-  protected readonly EIconName = EIconName;
+  private destroyRef = inject(DestroyRef);
   dragConfig: TExpanderItemDragConfig | undefined = { isDraggable: true };
 
-  get list(): FormArray<TWorkExpDataForm> {
-    return this.parentFormGroup.get(this.controlKey) as FormArray<TWorkExpDataForm>;
+  get list(): FormArray<TLinkDataForm> {
+    return this.childControl as FormArray<TLinkDataForm>;
   }
+
   ngOnInit() {
     this.registerControl(
       this._formBuilder.array(
         this.initModel?.length
           ? this.initModel.map(item => {
               return this._formBuilder.group({
-                company: [item?.company ?? ''],
-                jobPosition: [item?.jobPosition ?? ''],
-                location: [item?.location ?? ''],
-                startDate: [item?.startDate ?? null],
-                endDate: [item?.endDate ?? null],
-                stillWorking: [!!item?.stillWorking],
-                description: [item?.description ?? '']
+                label: [item?.label ?? ''],
+                link: [item?.link ?? '']
               });
             })
           : []
       )
     );
   }
+
   ngOnDestroy() {
     this.unRegisterControl();
   }
 
   private openModal(
     mode: 'create' | 'edit',
-    initData: TNullableType<IWorkExpModel>,
+    initData: TNullableType<TLinkModelData>,
     index?: TNullableType<number>
   ) {
     this.modalService
       .openModal(
-        WorkExpModalComponent,
+        LinksModalComponent,
         {
-          size: EModalSize.LARGE,
+          size: EModalSize.MEDIUM,
           disableClose: true,
           modalData: initData,
-          caption: mode === 'create' ? 'Добавить опыт работы' : 'Редактировать опыт работы'
+          caption: mode === 'create' ? 'Добавить ссылку' : 'Редактировать ссылку'
         },
         {
           autoFocus: false
         }
       )
-      .closed.subscribe((data: TNullableType<TWorkExpModelData>) => {
+      .closed.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: TNullableType<TLinkModelData>) => {
         if (data) {
           if (mode === 'create') {
             this.list.push(
               this._formBuilder.group({
-                company: [data?.company ?? ''],
-                jobPosition: [data?.jobPosition ?? ''],
-                location: [data?.location ?? ''],
-                startDate: [data?.startDate ?? null],
-                endDate: [data?.endDate ?? null],
-                stillWorking: [!!data?.stillWorking],
-                description: [data?.description ?? '']
+                label: [data?.label ?? ''],
+                link: [data?.link ?? '']
               })
             );
           } else {
@@ -117,7 +115,7 @@ export class WorkExpListComponent extends AttachToContainer implements OnInit, O
 
   handleEdit(idx: number) {
     const group = this.list.at(idx);
-    this.openModal('edit', group.value as unknown as IWorkExpModel, idx);
+    this.openModal('edit', group.value as TLinkModelData, idx);
   }
 
   handleAction({ index, btnName }: TExpanderItemActionOutput) {
