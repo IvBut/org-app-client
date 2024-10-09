@@ -11,7 +11,9 @@ export const dateFormatter = (
   options: dateFns.FormatOptions = { locale: ru }
 ) => {
   if (!date && date !== 0) return emptyValue;
-  return dateFns.isValid(date) ? dateFns.formatDate(date, outputFormat, options) : emptyValue;
+  return dateFns.isValid(new Date(date))
+    ? dateFns.formatDate(date, outputFormat, options)
+    : emptyValue;
 };
 export const getToday = () => {
   return dateFns.startOfToday();

@@ -5,7 +5,6 @@ import {
   DestroyRef,
   inject,
   Input,
-  OnDestroy,
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -38,7 +37,7 @@ import { LanguageModalComponent } from '../language-modal/language-modal.compone
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LanguagesListComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class LanguagesListComponent extends AttachToContainer implements OnInit {
   @Input() initModel?: TNullableType<TLanguageGroupModelData>[];
 
   private _formBuilder = inject(FormBuilder);
@@ -130,9 +129,5 @@ export class LanguagesListComponent extends AttachToContainer implements OnInit,
   drop(event: CdkDragDrop<any>) {
     moveItemInFormArray(this.list, event.previousIndex, event.currentIndex);
     this.cdr.markForCheck();
-  }
-
-  ngOnDestroy() {
-    this.unRegisterControl();
   }
 }

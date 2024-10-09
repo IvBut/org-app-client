@@ -5,7 +5,6 @@ import {
   DestroyRef,
   inject,
   Input,
-  OnDestroy,
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -37,7 +36,7 @@ import { LinksModalComponent } from '../links-modal/links-modal.component';
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LinksListComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class LinksListComponent extends AttachToContainer implements OnInit {
   @Input() initModel?: TNullableType<TLinkModelData>[];
 
   private _formBuilder = inject(FormBuilder);
@@ -63,11 +62,6 @@ export class LinksListComponent extends AttachToContainer implements OnInit, OnD
       )
     );
   }
-
-  ngOnDestroy() {
-    this.unRegisterControl();
-  }
-
   private openModal(
     mode: 'create' | 'edit',
     initData: TNullableType<TLinkModelData>,

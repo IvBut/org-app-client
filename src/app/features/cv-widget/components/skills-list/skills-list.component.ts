@@ -5,7 +5,6 @@ import {
   DestroyRef,
   inject,
   Input,
-  OnDestroy,
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,7 +34,7 @@ import { SkillsModalComponent } from '../skills-modal/skills-modal.component';
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsListComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class SkillsListComponent extends AttachToContainer implements OnInit {
   @Input() initModel?: TNullableType<TISKillsGroupModelData>[];
   private _formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
@@ -72,10 +71,6 @@ export class SkillsListComponent extends AttachToContainer implements OnInit, On
       )
     );
     this.cdr.markForCheck();
-  }
-
-  ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
   }
 
   handleAdd() {

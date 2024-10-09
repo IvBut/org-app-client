@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TNullableType } from '../../../../core/models/types';
 import { DEFAULT_EDITOR_TOOLBAR } from '../../model/editor.configs';
@@ -23,7 +23,7 @@ import {
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileDataFormComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class ProfileDataFormComponent extends AttachToContainer implements OnInit {
   @Input() initModel: TNullableType<TProfileModelData>;
 
   form: FormGroup<ProfileModel>;
@@ -36,9 +36,5 @@ export class ProfileDataFormComponent extends AttachToContainer implements OnIni
       summary: new FormControl(this.initModel?.summary ?? '')
     });
     this.registerControl(this.form);
-  }
-
-  ngOnDestroy() {
-    this.unRegisterControl();
   }
 }

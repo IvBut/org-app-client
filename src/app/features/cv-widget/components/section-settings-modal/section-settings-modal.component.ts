@@ -5,7 +5,7 @@ import {
   TModalDataInjectionToken
 } from '../../../../core/models/modal.model';
 import { updateValueAndValidity } from '../../../../core/utils/formUtils';
-import { ISectionSettings, TSectionSettingsData } from '../../model/section.model';
+import { ISectionSettings, TSectionSettingsModelData } from '../../model/section.model';
 
 @Component({
   selector: 'cur-section-settings-modal',
@@ -22,7 +22,7 @@ export class SectionSettingsModalComponent {
   private _formBuilder = inject(FormBuilder);
 
   modalData = inject<TModalDataInjectionToken>(MODAL_DATA_INJECTION_TOKEN);
-  initData: TSectionSettingsData = this.modalData.modalData;
+  initData: TSectionSettingsModelData = this.modalData.modalData;
 
   form: FormGroup<ISectionSettings> = this._formBuilder.group({
     sectionId: new FormControl(this.initData.sectionId),

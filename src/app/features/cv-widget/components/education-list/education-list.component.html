@@ -1,7 +1,7 @@
 <cur-add-list-btn (clickAdd)="handleAdd()">Добавить образование</cur-add-list-btn>
 <div class="mt-3">
   <cur-expander [multi]="true" (dropEnd)="drop($event)">
-    @for (educationItem of list.controls; track $index) {
+    @for (educationItem of list?.controls; track $index) {
       <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
         <ng-template curExpanderTitle>
           @if (educationItem.controls.location.value) {
