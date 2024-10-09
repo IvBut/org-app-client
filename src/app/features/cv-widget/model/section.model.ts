@@ -9,7 +9,7 @@ export interface ISectionSettings {
 
 export type TSectionSettingsGroup = FormGroup<ISectionSettings>;
 
-export type TSectionSettingsData = ExtractFormControl<ISectionSettings>;
+export type TSectionSettingsModelData = ExtractFormControl<ISectionSettings>;
 
 export enum ESectionId {
   SKILLS = 'SKILLS',
@@ -19,3 +19,36 @@ export enum ESectionId {
   LANGUAGES = 'LANGUAGES',
   LINKS = 'LINKS'
 }
+
+export const SECTIONS_CONFIG = [
+  {
+    sectionId: ESectionId.WORK_EXPERIENCE,
+    sectionName: () => 'Опыт работы',
+    hideSection: () => false
+  },
+  {
+    sectionId: ESectionId.EDUCATION,
+    sectionName: () => 'Образование',
+    hideSection: () => false
+  },
+  {
+    sectionId: ESectionId.SKILLS,
+    sectionName: () => 'Навыки',
+    hideSection: () => false
+  },
+  {
+    sectionId: ESectionId.LANGUAGES,
+    sectionName: () => 'Языки',
+    hideSection: () => false
+  },
+  {
+    sectionId: ESectionId.LINKS,
+    sectionName: () => 'Социальные сети',
+    hideSection: () => false
+  },
+  {
+    sectionId: ESectionId.PROFILE,
+    sectionName: () => 'Профиль',
+    hideSection: () => false
+  }
+];

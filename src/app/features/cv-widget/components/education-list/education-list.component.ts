@@ -5,7 +5,6 @@ import {
   DestroyRef,
   inject,
   Input,
-  OnDestroy,
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -33,7 +32,7 @@ import { EducationModalComponent } from '../education-modal/education-modal.comp
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EducationListComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class EducationListComponent extends AttachToContainer implements OnInit {
   @Input() initModel?: TNullableType<TEducationModelData>[];
 
   private _formBuilder = inject(FormBuilder);
@@ -62,10 +61,6 @@ export class EducationListComponent extends AttachToContainer implements OnInit,
           : []
       )
     );
-  }
-
-  ngOnDestroy() {
-    this.unRegisterControl();
   }
 
   private openModal(

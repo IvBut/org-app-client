@@ -1,6 +1,6 @@
 <cur-add-list-btn (clickAdd)="handleAdd()">Добавить навык</cur-add-list-btn>
 <cur-expander [multi]="true" (dropEnd)="drop($event, list)">
-  @for (skillControl of list.controls; track $index) {
+  @for (skillControl of list?.controls; track $index) {
     <cur-expander-item [dragConfig]="dragConfig" [actions]="[]">
       <ng-template curExpanderTitle>
         @if (skillControl.controls.type?.value) {

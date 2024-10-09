@@ -1,7 +1,7 @@
 <cur-add-list-btn (clickAdd)="handleAdd()">Добавить опыт работы</cur-add-list-btn>
 <div class="mt-4">
   <cur-expander [multi]="true" (dropEnd)="drop($event)">
-    @for (exp of list.controls; track $index) {
+    @for (exp of list?.controls; track $index) {
       <cur-expander-item (actionClick)="handleAction($event)" [dragConfig]="dragConfig">
         <ng-template curExpanderTitle>{{ exp.controls.company.value }}</ng-template>
         <ng-template curExpanderTitleDescription>

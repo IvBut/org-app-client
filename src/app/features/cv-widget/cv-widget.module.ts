@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragHandle, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import {
   MatStartDate
 } from '@angular/material/datepicker';
 import { MatDivider } from '@angular/material/divider';
+import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -161,7 +162,10 @@ const routes: Routes = [
     MatChipSet,
     CdkDropList,
     MatChip,
-    CdkDrag
+    CdkDrag,
+    MatAccordion,
+    MatExpansionPanel,
+    CdkDragPlaceholder
   ]
 })
 export class CvWidgetModule {}

@@ -12,7 +12,11 @@ import { ModalService } from '../../../../../core/components/modal/services/moda
 import { EModalSize } from '../../../../../core/models/modal.model';
 import { TNullableType } from '../../../../../core/models/types';
 import { EIconName } from '../../../../../shared/models/icon.model';
-import { ESectionId, ISectionSettings, TSectionSettingsData } from '../../../model/section.model';
+import {
+  ESectionId,
+  ISectionSettings,
+  TSectionSettingsModelData
+} from '../../../model/section.model';
 import { SectionSettingsModalComponent } from '../../section-settings-modal/section-settings-modal.component';
 
 @Component({
@@ -52,7 +56,7 @@ export class InfoHeaderComponent {
         caption: 'Настройка раздела'
       })
       .closed.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: TNullableType<TSectionSettingsData>) => {
+      .subscribe((data: TNullableType<TSectionSettingsModelData>) => {
         if (data) {
           this.settings.setValue(data);
           this.cdr.markForCheck();

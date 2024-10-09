@@ -1,41 +1,34 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import { ControlContainer, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { ExtractFormControl, TNullableType } from '../../../../core/models/types';
+import { moveItemInFormArray } from '../../../../core/utils/formUtils';
 import { TCVWizardModel } from '../../model/cv.model';
 import { TEducationModelData } from '../../model/education.model';
 import { TLanguageGroupModelData } from '../../model/languages.model';
 import { TLinkModelData } from '../../model/link.model';
 import { TProfileModelData } from '../../model/profile.model';
-import { ESectionId, ISectionSettings, TSectionSettingsGroup } from '../../model/section.model';
+import {
+  ESectionId,
+  SECTIONS_CONFIG,
+  TSectionSettingsGroup,
+  TSectionSettingsModelData
+} from '../../model/section.model';
 import { ESkillType, TISKillsGroupModelData } from '../../model/skill.model';
 import { TWorkExpModelData } from '../../model/work-exp.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../attach-to-container/attach-to-container.directive';
 
 @Component({
   selector: 'cur-additional-info',
   templateUrl: './additional-info.component.html',
-  styles: `
-    :host {
-      display: block;
-    }
-  `,
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  styleUrl: `./additional-info.component.scss`,
+  viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdditionalInfoComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) settingsControlKey = '';
+export class AdditionalInfoComponent extends AttachToContainer implements OnInit {
   @Input({ required: true }) workExpControlKey = '';
   @Input({ required: true }) educationControlKey = '';
   @Input({ required: true }) skillsControlKey = '';
@@ -45,17 +38,17 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
 
   @Input() initModel: ExtractFormControl<TCVWizardModel>;
 
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private _formBuilder = inject(FormBuilder);
   protected readonly ESectionId = ESectionId;
-  parentContainer = inject(ControlContainer);
-
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
 
   get settingsList(): FormArray<TSectionSettingsGroup> {
-    return this.parentFormGroup.get(this.settingsControlKey) as FormArray<TSectionSettingsGroup>;
+    return this.childControl as FormArray<TSectionSettingsGroup>;
+  }
+
+  get settingsInitModel() {
+    return (this.initModel?.sectionSettings?.length
+      ? this.initModel.sectionSettings
+      : []) as unknown as TSectionSettingsModelData[];
   }
 
   get worksInitModel(): TWorkExpModelData[] {
@@ -94,45 +87,29 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.parentFormGroup.addControl(
-      this.settingsControlKey,
-      this._formBuilder.array([
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.WORK_EXPERIENCE),
-          sectionName: new FormControl('Опыт работы'),
-          hideSection: new FormControl(false)
-        }),
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.EDUCATION),
-          sectionName: new FormControl('Образование'),
-          hideSection: new FormControl(false)
-        }),
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.SKILLS),
-          sectionName: new FormControl('Навыки'),
-          hideSection: new FormControl(false)
-        }),
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.LANGUAGES),
-          sectionName: new FormControl('Языки'),
-          hideSection: new FormControl(false)
-        }),
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.LINKS),
-          sectionName: new FormControl('Социальные сети'),
-          hideSection: new FormControl(false)
-        }),
-        new FormGroup<ISectionSettings>({
-          sectionId: new FormControl(ESectionId.PROFILE),
-          sectionName: new FormControl('Профиль'),
-          hideSection: new FormControl(false)
-        })
-      ])
+    this.registerControl(
+      this._formBuilder.array(
+        this.settingsInitModel.length
+          ? this.settingsInitModel.map(el => {
+              return this._formBuilder.group({
+                sectionId: [el.sectionId],
+                sectionName: [el.sectionName],
+                hideSection: [el.hideSection]
+              });
+            })
+          : SECTIONS_CONFIG.map(conf => {
+              return this._formBuilder.group({
+                sectionId: [conf.sectionId as string],
+                sectionName: [conf.sectionName()],
+                hideSection: [conf.hideSection()]
+              });
+            })
+      )
     );
-    this.cdr.markForCheck();
   }
 
-  ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.settingsControlKey);
+  drop(event: CdkDragDrop<any>) {
+    moveItemInFormArray(this.settingsList, event.previousIndex, event.currentIndex);
+    this.cdr.detectChanges();
   }
 }

@@ -1,12 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
@@ -32,7 +25,7 @@ import { WorkExpModalComponent } from '../work-exp-modal/work-exp-modal.componen
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkExpListComponent extends AttachToContainer implements OnInit, OnDestroy {
+export class WorkExpListComponent extends AttachToContainer implements OnInit {
   @Input() initModel?: TNullableType<TWorkExpModelData>[];
 
   private _formBuilder = inject(FormBuilder);
@@ -62,10 +55,6 @@ export class WorkExpListComponent extends AttachToContainer implements OnInit, O
       )
     );
   }
-  ngOnDestroy() {
-    this.unRegisterControl();
-  }
-
   private openModal(
     mode: 'create' | 'edit',
     initData: TNullableType<IWorkExpModel>,
