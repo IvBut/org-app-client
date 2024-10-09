@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragHandle, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -164,7 +164,8 @@ const routes: Routes = [
     MatChip,
     CdkDrag,
     MatAccordion,
-    MatExpansionPanel
+    MatExpansionPanel,
+    CdkDragPlaceholder
   ]
 })
 export class CvWidgetModule {}

@@ -24,11 +24,7 @@ import {
 @Component({
   selector: 'cur-additional-info',
   templateUrl: './additional-info.component.html',
-  styles: `
-    :host {
-      display: block;
-    }
-  `,
+  styleUrl: `./additional-info.component.scss`,
   viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

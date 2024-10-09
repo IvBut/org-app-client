@@ -1,6 +1,7 @@
 <div cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
   @for (sectionControl of settingsList.controls; track $index) {
     <mat-card cdkDrag cdkDragLockAxis="y" appearance="outlined" [ngClass]="{ 'mt-5': !$first }">
+      <div class="custom-placeholder" *cdkDragPlaceholder></div>
       <mat-card-header>
         <cur-info-header [settings]="sectionControl"></cur-info-header>
       </mat-card-header>
