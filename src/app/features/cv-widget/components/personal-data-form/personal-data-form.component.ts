@@ -1,60 +1,41 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
   Input,
-  OnDestroy,
   OnInit
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TNull } from '../../../../core/models/types';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TNull, TNullableType } from '../../../../core/models/types';
 import { dateFormatter, getToday, geYearsBefore } from '../../../../core/utils/date';
-import { IPersonalDataModel } from '../../model/personal-data.model';
+import {
+  GENDER_OPTIONS,
+  IPersonalModel,
+  TPersonalModelData
+} from '../../model/personal-data.model';
+import {
+  AttachToContainer,
+  controlContainerProvider
+} from '../attach-to-container/attach-to-container.directive';
 
 @Component({
   selector: 'cur-personal-data-form',
   templateUrl: './personal-data-form.component.html',
   styleUrl: './personal-data-form.component.scss',
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true })
-    }
-  ],
+  viewProviders: [controlContainerProvider],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PersonalDataFormComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) controlKey = '';
-  @Input() label?: string = '';
+export class PersonalDataFormComponent extends AttachToContainer implements OnInit {
+  @Input() initModel?: TNullableType<TPersonalModelData>;
 
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private _formBuilder = inject(FormBuilder);
   destroyRef = inject(DestroyRef);
-  parentContainer = inject(ControlContainer);
 
-  readonly genderOptions: { label: string; value: string }[] = [
-    { label: 'Не указывать', value: 'default' },
-    { label: 'Mужской', value: 'male' },
-    { label: 'Женский', value: 'female' }
-  ];
+  readonly genderOptions: { label: string; value: string }[] = GENDER_OPTIONS;
 
-  fg: FormGroup<IPersonalDataModel> = new FormGroup<IPersonalDataModel>({
-    name: new FormControl('', [Validators.required]),
-    secondName: new FormControl('', [Validators.required]),
-    photo: new FormControl(null),
-    middleName: new FormControl('', [Validators.required]),
-    noMiddleName: new FormControl(false),
-    birtDate: new FormControl(null, [Validators.required]),
-    gender: new FormControl(this.genderOptions[0]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl(''),
-    country: new FormControl(''),
-    city: new FormControl(''),
-    address: new FormControl(''),
-    postalCode: new FormControl('')
-  });
+  fg: FormGroup<IPersonalModel>;
   readonly minBirthDate = geYearsBefore(120);
   readonly maxBirthDate = getToday();
   readonly birthDateErrors = {
@@ -63,12 +44,33 @@ export class PersonalDataFormComponent implements OnInit, OnDestroy {
     matDatepickerMax: () => `Введенная дата должна быть меньше ${dateFormatter(this.maxBirthDate)}`
   };
 
-  get parentFormGroup() {
-    return this.parentContainer.control as FormGroup;
-  }
-
   ngOnInit() {
-    this.parentFormGroup.addControl(this.controlKey, this.fg);
+    this.fg = this._formBuilder.group({
+      name: [this.initModel?.name ?? '', [Validators.required]],
+      secondName: [this?.initModel?.secondName ?? '', [Validators.required]],
+      photo: [this?.initModel?.photo ?? null],
+      middleName: [this?.initModel?.middleName ?? '', [Validators.required]],
+      noMiddleName: [!!this?.initModel?.noMiddleName],
+      birtDate: new FormControl(
+        this.initModel?.birtDate ? new Date(this.initModel.birtDate) : null,
+        {
+          nonNullable: false,
+          validators: [Validators.required]
+        }
+      ),
+      gender: [
+        this.initModel?.gender
+          ? (GENDER_OPTIONS.find(el => el.value === this.initModel?.gender)?.value as string)
+          : (GENDER_OPTIONS[0].value as string)
+      ],
+      email: [this?.initModel?.email ?? '', [Validators.required, Validators.email]],
+      phone: [this?.initModel?.phone ?? ''],
+      country: [this.initModel?.country ?? ''],
+      city: [this?.initModel?.city ?? ''],
+      address: [this?.initModel?.address ?? ''],
+      postalCode: [this?.initModel?.postalCode ?? '']
+    });
+    this.registerControl(this.fg);
     this.fg.controls.noMiddleName.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(val => {
@@ -83,9 +85,6 @@ export class PersonalDataFormComponent implements OnInit, OnDestroy {
         }
         middleName.updateValueAndValidity();
       });
-  }
-  ngOnDestroy() {
-    this.parentFormGroup.removeControl(this.controlKey);
   }
 
   handleFileChange(data: TNull<File>) {
