@@ -49,7 +49,7 @@ export class PickExperienceComponent implements OnChanges, ControlValueAccessor 
   ngOnChanges({ pickedValue }: SimpleChanges): void {
     const idx = this.pickExpOptions.findIndex(el => el.value === pickedValue?.currentValue);
     if (idx > -1) {
-      this.pickedValue = this.pickExpOptions[idx];
+      this._pickedValue = this.pickExpOptions[idx];
       this._index = idx;
     } else {
       this._pickedValue = null;

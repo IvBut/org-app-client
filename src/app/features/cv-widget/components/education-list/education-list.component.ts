@@ -12,6 +12,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../../core/components/modal/services/modal.service';
 import { EModalSize } from '../../../../core/models/modal.model';
 import { TNullableType } from '../../../../core/models/types';
+import { getDate } from '../../../../core/utils/date';
 import { moveItemInFormArray } from '../../../../core/utils/formUtils';
 import {
   EExpanderItemAction,
@@ -54,8 +55,8 @@ export class EducationListComponent extends AttachToContainer implements OnInit 
                 degree: [item?.degree ?? ''],
                 location: [item?.location ?? ''],
                 description: [item?.description ?? ''],
-                startYear: [item?.startYear ?? null],
-                endYear: [item?.endYear ?? null]
+                startYear: [getDate(item?.startYear)],
+                endYear: [getDate(item?.endYear)]
               });
             })
           : []
@@ -91,12 +92,16 @@ export class EducationListComponent extends AttachToContainer implements OnInit 
                 degree: [data?.degree ?? ''],
                 location: [data?.location ?? ''],
                 description: [data?.description ?? ''],
-                startYear: [data?.startYear ?? null],
-                endYear: [data?.endYear ?? null]
+                startYear: [getDate(data?.startYear)],
+                endYear: [getDate(data?.endYear)]
               })
             );
           } else {
-            this.list.at(index).patchValue(data);
+            this.list.at(index).patchValue({
+              ...data,
+              startYear: getDate(data?.startYear),
+              endYear: getDate(data?.endYear)
+            });
           }
           this.cdr.markForCheck();
         }
@@ -114,7 +119,7 @@ export class EducationListComponent extends AttachToContainer implements OnInit 
 
   handleEdit(idx: number) {
     const group = this.list.at(idx);
-    this.openModal('edit', group.value as TEducationModelData, idx);
+    this.openModal('edit', group.value as unknown as TEducationModelData, idx);
   }
 
   handleAction({ index, btnName }: TExpanderItemActionOutput) {

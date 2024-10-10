@@ -11,7 +11,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as dateFns from 'date-fns';
 import { TNullableType } from '../../../../../core/models/types';
-import { geYearsAfter, geYearsBefore } from '../../../../../core/utils/date';
+import { geYearsAfter, geYearsBefore, getDate } from '../../../../../core/utils/date';
 import { DEFAULT_EDITOR_TOOLBAR } from '../../../model/editor.configs';
 import { IEducationModel, TEducationModelData } from '../../../model/education.model';
 import {
@@ -98,8 +98,8 @@ export class EducationFormComponent extends AttachToContainer implements OnInit,
       institution: new FormControl(this.initModel?.institution ?? '', [Validators.required]),
       degree: new FormControl(this.initModel?.degree ?? '', [Validators.required]),
       location: new FormControl(this.initModel?.location ?? ''),
-      startYear: new FormControl(this?.initModel?.startYear ?? null, [Validators.required]),
-      endYear: new FormControl(this.initModel?.endYear ?? null, [Validators.required]),
+      startYear: new FormControl(getDate(this?.initModel?.startYear), [Validators.required]),
+      endYear: new FormControl(getDate(this.initModel?.endYear), [Validators.required]),
       description: new FormControl(this.initModel?.description ?? '')
     });
     this.registerControl(this.fg);

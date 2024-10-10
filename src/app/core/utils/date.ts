@@ -51,3 +51,7 @@ export const geYearsAfter = (count: number) => {
   const today = getToday();
   return dateFns.addYears(today, count);
 };
+
+export const getDate = (d: TNullableType<Date | string>): Date | null => {
+  return d ? (typeof d === 'string' ? new Date(d) : d) : null;
+};
