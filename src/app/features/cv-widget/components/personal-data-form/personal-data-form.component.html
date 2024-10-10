@@ -1,116 +1,107 @@
 <form [formGroupName]="controlKey">
-  @if (label) {
-    <h2>{{ label }}</h2>
-    <hr />
-  }
   <div class="header">
     <div class="header-image-wrapper">
       <cur-upload-photo (fileChange)="handleFileChange($event)"></cur-upload-photo>
     </div>
-    <div class="header-controls-wrapper">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Имя</mat-label>
-        <input matInput placeholder="Введите имя" formControlName="name" />
-        <mat-error><cur-validation-errors controlKey="name"></cur-validation-errors></mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Фамилия</mat-label>
-        <input matInput placeholder="Введите фамилию" formControlName="secondName" />
-        <mat-error
-          ><cur-validation-errors controlKey="secondName"></cur-validation-errors
-        ></mat-error>
-      </mat-form-field>
+    <div class="header-controls-wrapper pl-4">
+      <div class="field-in-row-1">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Имя</mat-label>
+          <input matInput placeholder="Введите имя" formControlName="name" />
+          <mat-error><cur-validation-errors controlKey="name"></cur-validation-errors></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="field-in-row-1 mt-4">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Фамилия</mat-label>
+          <input matInput placeholder="Введите фамилию" formControlName="secondName" />
+          <mat-error
+            ><cur-validation-errors controlKey="secondName"></cur-validation-errors
+          ></mat-error>
+        </mat-form-field>
+      </div>
     </div>
   </div>
-  <div class="main-content">
-    <div class="main-content-row middle-name-row">
-      <mat-form-field appearance="outline" class="middle-name" subscriptSizing="dynamic">
-        <mat-label>Отчество</mat-label>
-        <input matInput placeholder="Введите отчество" formControlName="middleName" />
-        <mat-error
-          ><cur-validation-errors controlKey="middleName"></cur-validation-errors
-        ></mat-error>
-      </mat-form-field>
-      <mat-checkbox formControlName="noMiddleName" class="no-middle-name"
-        >Без отчества</mat-checkbox
-      >
-    </div>
-    <div class="main-content-row two_controls">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Дата рождения</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          formControlName="birtDate"
-          [min]="minBirthDate"
-          [max]="maxBirthDate" />
-        <mat-hint>день.месяц.год</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="year"></mat-datepicker>
-        <mat-error
-          ><cur-validation-errors
-            controlKey="birtDate"
-            [configForErrors]="birthDateErrors"></cur-validation-errors
-        ></mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Пол</mat-label>
-        <mat-select formControlName="gender">
-          <mat-option *ngFor="let opt of genderOptions" [value]="opt.value">{{
-            opt.label
-          }}</mat-option>
-        </mat-select>
-        <mat-error><cur-validation-errors controlKey="gender"></cur-validation-errors></mat-error>
-      </mat-form-field>
-    </div>
-    <div class="main-content-row two_controls">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Адрес электронной почты</mat-label>
-        <input matInput placeholder="Введите адрес электронной почты" formControlName="email" />
-        <mat-error><cur-validation-errors controlKey="email"></cur-validation-errors></mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Телефон</mat-label>
-        <input
-          matInput
-          placeholder="Введите номер телефона"
-          formControlName="phone"
-          prefix="+"
-          [mask]="'9999999999999999'" />
-        <mat-error><cur-validation-errors controlKey="phone"></cur-validation-errors></mat-error>
-      </mat-form-field>
-    </div>
-    <div class="main-content-row two_controls">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Страна</mat-label>
-        <input matInput placeholder="Введите название страны" formControlName="country" />
-        <mat-error><cur-validation-errors controlKey="country"></cur-validation-errors></mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Город/Населенный пункт</mat-label>
-        <textarea
-          matInput
-          placeholder="Введите название населенного пункта"
-          formControlName="city"></textarea>
-        <mat-error><cur-validation-errors controlKey="city"></cur-validation-errors></mat-error>
-      </mat-form-field>
-    </div>
-    <div class="main-content-row two_controls">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Адрес</mat-label>
-        <textarea
-          matInput
-          placeholder="Введите адресс проживания"
-          formControlName="country"></textarea>
-        <mat-error><cur-validation-errors controlKey="address"></cur-validation-errors></mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Почтовый индекс</mat-label>
-        <input matInput placeholder="Введите почтовый индекс" formControlName="postalCode" />
-        <mat-error
-          ><cur-validation-errors controlKey="postalCode"></cur-validation-errors
-        ></mat-error>
-      </mat-form-field>
-    </div>
+  <div class="mt-5 field-in-row-2">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Отчество</mat-label>
+      <input matInput placeholder="Введите отчество" formControlName="middleName" />
+      <mat-error><cur-validation-errors controlKey="middleName"></cur-validation-errors></mat-error>
+    </mat-form-field>
+    <mat-checkbox formControlName="noMiddleName">Без отчества</mat-checkbox>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Дата рождения (день.месяц.год)</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="birtDate"
+        [min]="minBirthDate"
+        [max]="maxBirthDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year"></mat-datepicker>
+      <mat-error
+        ><cur-validation-errors
+          controlKey="birtDate"
+          [configForErrors]="birthDateErrors"></cur-validation-errors
+      ></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Пол</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option *ngFor="let opt of genderOptions" [value]="opt.value">{{
+          opt.label
+        }}</mat-option>
+      </mat-select>
+      <mat-error><cur-validation-errors controlKey="gender"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Адрес электронной почты</mat-label>
+      <input matInput placeholder="Введите адрес электронной почты" formControlName="email" />
+      <mat-error><cur-validation-errors controlKey="email"></cur-validation-errors></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Телефон</mat-label>
+      <input
+        matInput
+        placeholder="Введите номер телефона"
+        formControlName="phone"
+        prefix="+"
+        [mask]="'9999999999999999'" />
+      <mat-error><cur-validation-errors controlKey="phone"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Страна</mat-label>
+      <input matInput placeholder="Введите название страны" formControlName="country" />
+      <mat-error><cur-validation-errors controlKey="country"></cur-validation-errors></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Город/Населенный пункт</mat-label>
+      <textarea
+        matInput
+        placeholder="Введите название населенного пункта"
+        formControlName="city"></textarea>
+      <mat-error><cur-validation-errors controlKey="city"></cur-validation-errors></mat-error>
+    </mat-form-field>
+  </div>
+  <div class="field-in-row-2 mt-4">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Адрес</mat-label>
+      <textarea
+        matInput
+        placeholder="Введите адресс проживания"
+        formControlName="country"></textarea>
+      <mat-error><cur-validation-errors controlKey="address"></cur-validation-errors></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Почтовый индекс</mat-label>
+      <input matInput placeholder="Введите почтовый индекс" formControlName="postalCode" />
+      <mat-error><cur-validation-errors controlKey="postalCode"></cur-validation-errors></mat-error>
+    </mat-form-field>
   </div>
 </form>
