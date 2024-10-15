@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export const dataMock: any = {
@@ -97,8 +97,15 @@ export class CvApiService {
 
   private http = inject(HttpClient);
 
-  createCV(data: FormData) {
-    return this.http.post<any>(this.getUrl('/cv'), data);
+  createCV(data: FormData): Observable<{ fileId: string }> {
+    return this.http.post<{ fileId: string }>(this.getUrl('/cv'), data);
+  }
+
+  download(fileId: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(this.getUrl(`/cv/${fileId}/download`), {
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
 
   previewCV(data: FormData): Observable<any> {

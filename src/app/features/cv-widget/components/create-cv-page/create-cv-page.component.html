@@ -1,6 +1,6 @@
 <h1>Создание нового резюме</h1>
 <form [formGroup]="cvWizardData">
-  <mat-stepper linear="true">
+  <mat-stepper linear="true" #stepper>
     <mat-step [stepControl]="cvWizardData.controls.personalData">
       <ng-template matStepLabel>Персональные данные</ng-template>
       <cur-personal-data-form
@@ -13,8 +13,7 @@
           mat-flat-button
           color="primary"
           type="button"
-          matStepperNext
-          (click)="next('PERSONAL_DATA_STEP')">
+          (click)="next('PERSONAL_DATA_STEP', stepper)">
           Далее
         </button>
       </div>
@@ -41,11 +40,16 @@
           mat-flat-button
           color="primary"
           type="button"
-          matStepperNext
-          (click)="next('ADDITIONAL_DATA_STEP')">
+          (click)="next('ADDITIONAL_DATA_STEP', stepper)">
           Далее
         </button>
       </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Скачать файл</ng-template>
+      <button class="next" mat-flat-button color="primary" type="button" (click)="download()">
+        Скачать
+      </button>
     </mat-step>
   </mat-stepper>
 </form>
