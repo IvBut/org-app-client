@@ -45,12 +45,19 @@ export class PersonalDataFormComponent extends AttachToContainer implements OnIn
   };
 
   ngOnInit() {
+    const noMiddleName = !!this?.initModel?.noMiddleName;
     this.fg = this._formBuilder.group({
       name: [this.initModel?.name ?? '', [Validators.required]],
       secondName: [this?.initModel?.secondName ?? '', [Validators.required]],
       photo: [this?.initModel?.photo ?? null],
-      middleName: [this?.initModel?.middleName ?? '', [Validators.required]],
-      noMiddleName: [!!this?.initModel?.noMiddleName],
+      middleName: new FormControl(
+        {
+          value: noMiddleName ? '' : (this?.initModel?.middleName ?? ''),
+          disabled: noMiddleName
+        },
+        noMiddleName ? [] : [Validators.required]
+      ),
+      noMiddleName: [noMiddleName],
       birtDate: new FormControl(
         this.initModel?.birtDate ? new Date(this.initModel.birtDate) : null,
         {

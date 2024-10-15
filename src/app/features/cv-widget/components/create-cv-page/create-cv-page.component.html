@@ -4,6 +4,7 @@
     <mat-step [stepControl]="cvWizardData.controls.personalData">
       <ng-template matStepLabel>Персональные данные</ng-template>
       <cur-personal-data-form
+        [initModel]="initModel['personalData']"
         class="form-wrapper"
         [controlKey]="'personalData'"></cur-personal-data-form>
       <div class="navigate-buttons-wrapper">
@@ -13,7 +14,7 @@
           color="primary"
           type="button"
           matStepperNext
-          (click)="next(['personalData'])">
+          (click)="next('PERSONAL_DATA_STEP')">
           Далее
         </button>
       </div>
@@ -21,6 +22,7 @@
     <mat-step [stepControl]="cvWizardData.controls.sectionSettings">
       <ng-template matStepLabel>Доп. Информация</ng-template>
       <cur-additional-info
+        [initModel]="initModel"
         class="form-wrapper"
         [controlKey]="'sectionSettings'"
         [educationControlKey]="'educationList'"
@@ -40,18 +42,7 @@
           color="primary"
           type="button"
           matStepperNext
-          (click)="
-            next([
-              'sectionSettings',
-              'workExperienceList',
-              'educationList',
-              'sectionSettings',
-              'skills',
-              'profile',
-              'languages',
-              'links'
-            ])
-          ">
+          (click)="next('ADDITIONAL_DATA_STEP')">
           Далее
         </button>
       </div>

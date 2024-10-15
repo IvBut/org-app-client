@@ -65,6 +65,7 @@ import { WorkExpListComponent } from './components/work-exp-list/work-exp-list.c
 import { WorkExpFormComponent } from './components/work-exp-modal/work-exp-form/work-exp-form.component';
 import { WorkExpModalComponent } from './components/work-exp-modal/work-exp-modal.component';
 import { CvComponent } from './cv.component';
+import { CvApiService } from './services/cv-api.service';
 
 const routes: Routes = [
   {
@@ -166,6 +167,7 @@ const routes: Routes = [
     MatAccordion,
     MatExpansionPanel,
     CdkDragPlaceholder
-  ]
+  ],
+  providers: [CvApiService]
 })
 export class CvWidgetModule {}
